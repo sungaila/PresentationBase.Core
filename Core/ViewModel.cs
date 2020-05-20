@@ -79,12 +79,13 @@ namespace PresentationBase
 				return false;
 			}
 
-			// validate the new value if needed
-			AddPropertyErrors(propertyName!, propertyValidation?.Invoke(newValue));
-
 			// stop when the new and old value equal
 			if (EqualityComparer<T>.Default.Equals(propertyField, newValue))
 				return false;
+
+			// if the value was a view model then make sure to update its ParentViewModel
+			if (propertyName != nameof(ParentViewModel) && typeof(ViewModel).IsAssignableFrom(typeof(T)) && newValue == null)
+				(propertyField as ViewModel)!.ParentViewModel = null;
 
 			// otherwise set the new value for the property
 			propertyField = newValue;
@@ -92,6 +93,9 @@ namespace PresentationBase
 			// if the value was a view model then make sure to update its ParentViewModel
 			if (propertyName != nameof(ParentViewModel) && typeof(ViewModel).IsAssignableFrom(typeof(T)) && newValue != null)
 				(newValue as ViewModel)!.ParentViewModel = this;
+
+			// validate the new value if needed
+			AddPropertyErrors(propertyName!, propertyValidation?.Invoke(newValue));
 
 			// inform bindings about the changed property
 			RaisePropertyChanged(propertyName);
@@ -109,16 +113,34 @@ namespace PresentationBase
 			return true;
 		}
 
-		private ViewModel? _parentViewModel;
+		private WeakReference<ViewModel>? _parentViewModel = null;
 
 		/// <summary>
-		/// The logical parent of this view model. Please note that circular references are not supported.
+		/// The logical parent of this view model.
 		/// </summary>
-		/// <remarks>Every view model can have a single parent only.</remarks>
+		/// <remarks>
+		/// Please note that circular references are not supported.
+		/// This is a weak reference and can be <see langword="null"/> if the parent has been garbage collected.
+		/// </remarks>
 		public ViewModel? ParentViewModel
 		{
-			get => _parentViewModel;
-			set => SetProperty(ref _parentViewModel, value);
+			get
+			{
+				if (_parentViewModel == null || !_parentViewModel.TryGetTarget(out ViewModel? target))
+					return null;
+
+				return target;
+			}
+			set
+			{
+				ViewModel? oldValue = ParentViewModel;
+				if (SetProperty(ref oldValue, value))
+                {
+					_parentViewModel = value != null
+						? new WeakReference<ViewModel>(value)
+						: null;
+				}
+			}
 		}
 
 		/// <summary>

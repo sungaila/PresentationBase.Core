@@ -42,6 +42,8 @@ namespace PresentationBase
                 foreach (TViewModel item in e.NewItems.OfType<TViewModel>())
                     item.ParentViewModel = OwnerViewModel;
             }
+
+            OwnerViewModel.IsDirty = true;
         }
 
         /// <summary>
@@ -52,15 +54,28 @@ namespace PresentationBase
         /// <param name="propertyNames">The properties to observe for changes.</param>
         public void Observe(Action action, params string[] propertyNames)
         {
+            Observe((name) => action.Invoke(), propertyNames);
+        }
+
+        /// <summary>
+        /// Observes the child view models for changes to the properties defined in <paramref name="propertyNames"/>.
+        /// When changes are detected then <paramref name="action"/> is invoked.
+        /// </summary>
+        /// <param name="action">The action to invoke on observed change. The parameter is the name of the changed property.</param>
+        /// <param name="propertyNames">The properties to observe for changes.</param>
+        public void Observe(Action<string> action, params string[] propertyNames)
+        {
             if (action == null || propertyNames == null)
                 return;
 
             void propertyChangedHandler(object sender, PropertyChangedEventArgs e)
             {
+                OwnerViewModel.IsDirty = true;
+
                 if (!propertyNames.Contains(e.PropertyName))
                     return;
 
-                action.Invoke();
+                action.Invoke(e.PropertyName);
             }
 
             void collectionChangedHandler(object sender, NotifyCollectionChangedEventArgs e)

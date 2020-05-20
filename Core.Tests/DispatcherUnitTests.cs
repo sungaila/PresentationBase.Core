@@ -1,11 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PresentationBase;
 using System;
 
-namespace Core.Tests
+namespace PresentationBase.Tests
 {
     [TestClass]
-    public class DispatcherUnitTest
+    public class DispatcherUnitTests
     {
         [TestMethod]
         public void Generic()

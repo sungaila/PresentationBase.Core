@@ -3,9 +3,12 @@
 # PresentationBase.Core
 A lightweight MVVM implementation targeting both **.NET Framework** and **.NET Core**.
 
-It contains base implementations for *view models* (and their *commands*) and more.
+It contains base implementations for *view models*, *commands*, *data transfer object* conversion and more.
 
-Feel free to grab it from [NuGet.org](https://www.nuget.org/packages/PresentationBase) or to fork it for your own needs!
+Feel free to grab it from [NuGet.org](https://www.nuget.org/packages/PresentationBase.Core) or to fork it for your own needs!
+
+The following platform specific extensions exist:
+- [<img src="https://raw.githubusercontent.com/sungaila/PresentationBase/master/Icon.png" align="center" width="24" height="24" alt="PresentationBase Logo"> PresentationBase (WPF)](https://www.nuget.org/packages/PresentationBase)
 
 ## Examples
 Here are some examples for using PresentationBase.Core in your project.

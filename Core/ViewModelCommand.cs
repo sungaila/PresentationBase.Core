@@ -19,6 +19,9 @@ namespace PresentationBase
 		/// <summary>
 		/// Returns if the command can be executed for the given view model.
 		/// </summary>
+		/// <remarks>
+		/// Please note that this function might be called frequently. So make sure that this call is as inexpensive as possible.
+		/// </remarks>
 		/// <param name="parameter">The view model this command would be executed on.</param>
 		/// <returns>Returns if <see cref="Execute"/> is allowed for the given <paramref name="parameter"/>.</returns>
 		public virtual bool CanExecute(TViewModel parameter)
