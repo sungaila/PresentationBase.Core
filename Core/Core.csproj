@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Assembly -->
+  <PropertyGroup>
+    <TargetFrameworks>net45;net48;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+    <AssemblyName>PresentationBase.Core</AssemblyName>
+    <RootNamespace>PresentationBase</RootNamespace>
+    <EmbedAllSources>true</EmbedAllSources>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>PresentationBase.Core.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <Version>2.4.0</Version>
+    <Authors>David Sungaila</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Icon_128.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
+    <Description>A lightweight MVVM implementation targeting both .NET Framework and .NET Core.</Description>
+    <PackageReleaseNotes>TODO</PackageReleaseNotes>
+    <PackageTags>MVVM ViewModel Converter IValueConverter Command INotifyPropertyChanged INotifyDataErrorInfo ICommand DTO C#</PackageTags>
+    <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- C# compiler -->
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <Features>strict</Features>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Release builds -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DocumentationFile>bin\Release\PresentationBase.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <!-- NuGet Icon -->
+  <ItemGroup>
+    <None Include="..\Icon_128.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <!-- SourceLink build steps -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
