@@ -26,6 +26,10 @@ namespace PresentationBase
                 action.Invoke();
         }
 
+        /// <summary>
+        /// Specific dispatcher implementation.
+        /// </summary>
+        /// <param name="action">The action to dispatch.</param>
         protected abstract void DispatchImpl(Action action);
 
         static Dispatcher()
