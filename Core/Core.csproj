@@ -18,7 +18,7 @@
     <PackageIcon>Icon_128.png</PackageIcon>
     <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
-    <Description>A lightweight MVVM implementation targeting both .NET Framework and .NET Core.</Description>
+    <Description>A lightweight MVVM implementation targeting .NET Standard 2.0.</Description>
     <PackageReleaseNotes>Changed the target framework to .NET Standard 2.0.</PackageReleaseNotes>
     <PackageTags>MVVM ViewModel Converter IValueConverter Command INotifyPropertyChanged INotifyDataErrorInfo ICommand DTO C#</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
