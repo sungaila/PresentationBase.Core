@@ -11,7 +11,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>3.1.0</Version>
+    <Version>3.1.2</Version>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -410,12 +410,19 @@ namespace PresentationBase
 		/// </summary>
 		public static void ReInitializeCommands()
 		{
-			ReInitializeCommands(
-				AppDomain.CurrentDomain
-					.GetAssemblies()
-					.SelectMany(a => a.GetTypes())
-					.Where(type => !type.IsAbstract && typeof(IViewModelCommand).IsAssignableFrom(type) && type.HasGenericTypeArgument(typeof(ViewModel)))
+			try
+			{
+				ReInitializeCommands(
+					AppDomain.CurrentDomain
+						.GetAssemblies()
+						.SelectMany(a => a.GetTypes())
+						.Where(type => !type.IsAbstract && typeof(IViewModelCommand).IsAssignableFrom(type) && type.HasGenericTypeArgument(typeof(ViewModel)))
 					);
+			}
+			catch (Exception ex)
+			{
+				Debug.Fail($"Failed to query all assembly types: {ex}");
+			}
 		}
 
 		/// <summary>

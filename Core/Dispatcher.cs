@@ -34,20 +34,30 @@ namespace PresentationBase
 
         static Dispatcher()
         {
-            var implType = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .FirstOrDefault(type => !type.IsAbstract && typeof(Dispatcher).IsAssignableFrom(type) && type != typeof(Dispatcher));
+            Type? implType = null;
 
             try
             {
-                if (implType != null)
-                {
-                    Instance = (Dispatcher)Activator.CreateInstance(implType)!;
-                    return;
-                }
+                implType = AppDomain.CurrentDomain
+                    .GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .FirstOrDefault(type => !type.IsAbstract && typeof(Dispatcher).IsAssignableFrom(type) && type != typeof(Dispatcher));
+            }
+            catch (Exception ex)
+            {
+                Debug.Fail($"Failed to query all assembly types: {ex}");
+            }
 
+            if (implType == null)
+            {
                 Debug.Print($"No implementation of {nameof(Dispatcher)} has been found.");
+                return;
+            }
+
+            try
+            {
+                Instance = (Dispatcher)Activator.CreateInstance(implType)!;
+                return;
             }
             catch (Exception ex)
             {
