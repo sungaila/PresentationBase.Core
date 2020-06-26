@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon.png" align="left" width="64" height="64" alt="PresentationBase.Core Logo">
 
 # PresentationBase.Core
-A lightweight MVVM implementation targeting **.NET Standard 2.0**.
+A lightweight MVVM implementation targeting both **.NET Framework 4.5** and **.NET Standard 2.0**.
 
 It contains base implementations for *view models*, *commands*, *data transfer object* conversion and more.
 
