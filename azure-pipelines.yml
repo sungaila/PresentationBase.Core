@@ -34,7 +34,6 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: '**\bin\Debug\netcoreapp3.1\PresentationBase.Core.Tests.dll'
     searchFolder: '$(System.DefaultWorkingDirectory)'
-    runInParallel: true
     codeCoverageEnabled: true
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
