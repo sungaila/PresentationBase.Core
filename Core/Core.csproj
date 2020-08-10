@@ -5,7 +5,6 @@
     <AssemblyName>PresentationBase.Core</AssemblyName>
     <RootNamespace>PresentationBase</RootNamespace>
     <EmbedAllSources>true</EmbedAllSources>
-    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>PresentationBase.Core.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
@@ -38,6 +37,7 @@ Fixed an issue with finding commands by reflection.</PackageReleaseNotes>
 
   <!-- Release builds -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <SignAssembly>true</SignAssembly>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <DocumentationFile>bin\Release\PresentationBase.Core.xml</DocumentationFile>
