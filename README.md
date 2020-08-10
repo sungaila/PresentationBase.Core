@@ -1,11 +1,15 @@
 <img src="https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon.png" align="left" width="64" height="64" alt="PresentationBase.Core Logo">
 
 # PresentationBase.Core
+[![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/sungaila/2dc19da0-58ad-4e78-b091-a473a1ad54a8/1/master?style=flat-square)](https://dev.azure.com/sungaila/PresentationBase.Core/_build/latest?definitionId=1&branchName=master)
+[![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/sungaila/PresentationBase.Core/1/master?style=flat-square)](https://dev.azure.com/sungaila/PresentationBase.Core/_build/latest?definitionId=1&branchName=master)
+[![NuGet version](https://img.shields.io/nuget/v/PresentationBase.Core.svg?style=flat-square)](https://www.nuget.org/packages/PresentationBase.Core/)
+[![NuGet downloads](https://img.shields.io/nuget/dt/PresentationBase.Core.svg?style=flat-square)](https://www.nuget.org/packages/PresentationBase.Core/)
+[![GitHub license](https://img.shields.io/github/license/sungaila/PresentationBase.Core?style=flat-square)](https://github.com/sungaila/PresentationBase.Core/blob/master/LICENSE)
+
 A lightweight MVVM implementation targeting both **.NET Framework 4.5** and **.NET Standard 2.0**.
 
 It contains base implementations for *view models*, *commands*, *data transfer object* conversion and more.
-
-Feel free to grab it from [NuGet.org](https://www.nuget.org/packages/PresentationBase.Core) or to fork it for your own needs!
 
 The following platform specific extensions exist:
 - [<img src="https://raw.githubusercontent.com/sungaila/PresentationBase/master/Icon.png" align="center" width="24" height="24" alt="PresentationBase Logo"> PresentationBase (WPF)](https://www.nuget.org/packages/PresentationBase)
