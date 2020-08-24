@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace PresentationBase.DtoConverters
 {
@@ -20,18 +21,23 @@ namespace PresentationBase.DtoConverters
 			if (dto == null)
 				throw new ArgumentNullException(nameof(dto));
 
-			var dtoAttr = DtoAttribute.GetDtoAttribute(typeof(TViewModel));
-			if (dtoAttr == null)
+			var dtoAttrs = DtoAttribute.GetDtoAttributes(typeof(TViewModel));
+			if (!dtoAttrs.Any())
 				throw new InvalidOperationException("The given view model has no DtoAttribute defined.");
 
-			if (!dtoAttr.Type.IsAssignableFrom(dto.GetType()))
-				throw new InvalidCastException($"Cannot cast the data transfer object attribute type {dtoAttr.Type.Name} into the given type {dto.GetType().Name}.");
+			var dtoAttr = dtoAttrs.FirstOrDefault(attr => attr.Type.IsAssignableFrom(dto.GetType()));
+			if (dtoAttr == null)
+				throw new InvalidCastException($"There is no DtoAttribute assignable to the given type {dto.GetType().Name}.");
 
 			TViewModel result = (TViewModel)Activator.CreateInstance(typeof(TViewModel))!;
 
 			foreach (var propertyInfo in typeof(TViewModel).GetProperties())
 			{
-				var dtoPropertyAttr = DtoPropertyAttribute.GetDtoPropertyAttribute(propertyInfo);
+				var dtoPropertyAttrs = DtoPropertyAttribute.GetDtoPropertyAttributes(propertyInfo);
+				if (!dtoPropertyAttrs.Any())
+					continue;
+
+				var dtoPropertyAttr = dtoPropertyAttrs.FirstOrDefault(attr => attr.Type == null || attr.Type.IsAssignableFrom(dto.GetType()));
 				if (dtoPropertyAttr == null)
 					continue;
 
@@ -58,18 +64,23 @@ namespace PresentationBase.DtoConverters
 			if (viewModel == null)
 				throw new ArgumentNullException(nameof(viewModel));
 
-			var dtoAttr = DtoAttribute.GetDtoAttribute(viewModel.GetType());
-			if (dtoAttr == null)
+			var dtoAttrs = DtoAttribute.GetDtoAttributes(viewModel.GetType());
+			if (!dtoAttrs.Any())
 				throw new InvalidOperationException("The given view data transfer object has no DtoAttribute defined.");
 
-			if (!dtoAttr.Type.IsAssignableFrom(typeof(TDto)))
-				throw new InvalidCastException($"Cannot cast the data transfer object attribute type {dtoAttr.Type.Name} into the desired type {typeof(TDto).Name}.");
+			var dtoAttr = dtoAttrs.FirstOrDefault(attr => attr.Type.IsAssignableFrom(typeof(TDto)));
+			if (dtoAttr == null)
+				throw new InvalidCastException($"There is is no DtoAttribute assignable to the desired type {typeof(TDto).Name}.");
 
 			TDto result = (TDto)Activator.CreateInstance(dtoAttr.Type)!;
 
 			foreach (var propertyInfo in viewModel.GetType().GetProperties())
 			{
-				var dtoPropertyAttr = DtoPropertyAttribute.GetDtoPropertyAttribute(propertyInfo);
+				var dtoPropertyAttrs = DtoPropertyAttribute.GetDtoPropertyAttributes(propertyInfo);
+				if (!dtoPropertyAttrs.Any())
+					continue;
+
+				var dtoPropertyAttr = dtoPropertyAttrs.FirstOrDefault(attr => attr.Type == null || attr.Type.IsAssignableFrom(typeof(TDto)));
 				if (dtoPropertyAttr == null)
 					continue;
 
