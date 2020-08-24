@@ -154,8 +154,6 @@ public class NestedTransferDataObject
 {
     public string Name { get; set; }
 
-    public int Age { get; set; }
-
     public List<NestedTransferDataObject> Others { get; set; }
 }
 ```
@@ -172,15 +170,6 @@ public class NestedViewModel : ViewModel
     {
         get => _name;
         set => SetProperty(ref _name, value);
-    }
-
-    private int _age;
-
-    [DtoProperty]
-    public int Age
-    {
-        get => _age;
-        set => SetProperty(ref _age, value);
     }
 
     [DtoProperty]
@@ -204,6 +193,6 @@ var dto = new NestedTransferDataObject
 };
 var viewModel = dto.ToViewModel<NestedViewModel>();
 if (viewModel.Others.Single().Name == "Bobby")
-    viewModel.Age = 33;
+    viewModel.Name = "Definitely not Timmy";
 var dto2 = viewModel.ToDto<NestedTransferDataObject>();
 ```
