@@ -10,7 +10,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>3.1.3</Version>
+    <Version>3.2.0</Version>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -18,8 +18,10 @@
     <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
     <Description>A lightweight MVVM implementation targeting both .NET Framework 4.5 and .NET Standard 2.0.</Description>
-    <PackageReleaseNotes>Changed the target frameworks to .NET Framework 4.5 and .NET Standard 2.0.
-Fixed an issue with finding commands by reflection.</PackageReleaseNotes>
+    <PackageReleaseNotes>- ViewModels can be mapped to multiple data transfer objects
+- Nested data transfer objects can be converted to ViewModels (and vice versa)
+- ObservableViewModelCollections can be converted to Lists (and vice versa)
+- Fixed an issue with unhandled exceptions in async commands</PackageReleaseNotes>
     <PackageTags>MVVM ViewModel Converter IValueConverter Command INotifyPropertyChanged INotifyDataErrorInfo ICommand DTO C#</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

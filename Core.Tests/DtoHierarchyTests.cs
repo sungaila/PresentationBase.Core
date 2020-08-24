@@ -252,14 +252,8 @@ namespace PresentationBase.Tests
                 set => SetProperty(ref _fur, value);
             }
 
-            private ObservableViewModelCollection<PawViewModel>? _paws;
-
             [DtoProperty]
-            public ObservableViewModelCollection<PawViewModel>? Paws
-            {
-                get => _paws;
-                set => SetProperty(ref _paws, value);
-            }
+            public ObservableViewModelCollection<PawViewModel>? Paws { get; set; }
         }
 
         [Dto(typeof(FurDataTransferObject))]
@@ -307,14 +301,8 @@ namespace PresentationBase.Tests
                 set => SetProperty(ref _other, value);
             }
 
-            private ObservableViewModelCollection<SelfReferencingViewModel>? _others;
-
             [DtoProperty]
-            public ObservableViewModelCollection<SelfReferencingViewModel>? Others
-            {
-                get => _others;
-                set => SetProperty(ref _others, value);
-            }
+            public ObservableViewModelCollection<SelfReferencingViewModel>? Others { get; set; }
         }
     }
 }

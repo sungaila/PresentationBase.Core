@@ -12,7 +12,7 @@ A lightweight MVVM implementation targeting both **.NET Framework 4.5** and **.N
 It contains base implementations for *view models*, *commands*, *data transfer object* conversion and more.
 
 The following platform specific extensions exist:
-- [<img src="https://raw.githubusercontent.com/sungaila/PresentationBase/master/Icon.png" align="center" width="24" height="24" alt="PresentationBase Logo"> PresentationBase (WPF)](https://www.nuget.org/packages/PresentationBase)
+- [<img src="https://raw.githubusercontent.com/sungaila/PresentationBase/master/Icon.png" align="center" width="24" height="24" alt="PresentationBase Logo"> PresentationBase (WPF)](https://github.com/sungaila/PresentationBase)
 
 ## Examples
 Here are some examples for using PresentationBase.Core in your project.
@@ -145,4 +145,65 @@ var viewModel = dto.ToViewModel<AwesomeViewModel>();
 if (viewModel.Name == "John")
     viewModel.Age = 33;
 var dto2 = viewModel.ToDto<AwesomeTransferDataObject>();
+```
+
+### ... and nested ViewModels
+```csharp
+// C# code of DTO class
+public class NestedTransferDataObject
+{
+    public string Name { get; set; }
+
+    public int Age { get; set; }
+
+    public List<NestedTransferDataObject> Others { get; set; }
+}
+```
+
+```csharp
+// C# code of your ViewModel class
+[Dto(typeof(NestedTransferDataObject))]
+public class NestedViewModel : ViewModel
+{
+    private string _name;
+
+    [DtoProperty]
+    public string Name
+    {
+        get => _name;
+        set => SetProperty(ref _name, value);
+    }
+
+    private int _age;
+
+    [DtoProperty]
+    public int Age
+    {
+        get => _age;
+        set => SetProperty(ref _age, value);
+    }
+
+    [DtoProperty]
+    public ObservableViewModelCollection<NestedViewModel> Others { get; }
+
+    public NestedViewModel()
+    {
+        Others = new ObservableViewModelCollection<NestedViewModel>(this);
+    }
+}
+```
+
+```csharp
+// C# code of the conversion
+var dto = new NestedTransferDataObject
+{
+    Name = "Timmy",
+    Others = new List<NestedTransferDataObject>(new[] {
+        new NestedTransferDataObject { PersonName = "Bobby" }
+    })
+};
+var viewModel = dto.ToViewModel<NestedViewModel>();
+if (viewModel.Others.Single().Name == "Bobby")
+    viewModel.Age = 33;
+var dto2 = viewModel.ToDto<NestedTransferDataObject>();
 ```
