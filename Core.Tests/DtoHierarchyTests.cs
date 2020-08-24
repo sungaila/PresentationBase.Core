@@ -79,7 +79,7 @@ namespace PresentationBase.Tests
         {
             var dto = new CatDataTransferObject
             {
-                Paws = new LinkedList<PawDataTransferObject>(new[]
+                Paws = new List<PawDataTransferObject>(new[]
                 {
                     new PawDataTransferObject { Steps = 300 },
                     new PawDataTransferObject { Steps = 300 },
@@ -209,7 +209,7 @@ namespace PresentationBase.Tests
 
             public FurDataTransferObject? Fur { get; set; }
 
-            public LinkedList<PawDataTransferObject>? Paws { get; set; }
+            public List<PawDataTransferObject>? Paws { get; set; }
         }
 
         class FurDataTransferObject

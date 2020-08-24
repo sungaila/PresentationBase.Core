@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -70,6 +71,22 @@ namespace PresentationBase.DtoConverters
 
 					MethodInfo genericToViewModel = _internalToViewModelInfo.MakeGenericMethod(propertyInfo.PropertyType);
 					valueToSet = genericToViewModel.Invoke(null, new[] { valueToConvert, visitedDtos });
+				}
+				else if (IsTypeIList(dtoPropertyInfo.PropertyType) && IsTypeObservableViewModelCollection(propertyInfo.PropertyType))
+                {
+					if (valueToConvert == null)
+						continue;
+
+					var collection = Activator.CreateInstance(propertyInfo.PropertyType, new[] { result });
+
+					MethodInfo genericToViewModel = _internalToViewModelInfo.MakeGenericMethod(propertyInfo.PropertyType.GenericTypeArguments.First());
+
+					foreach (var item in (IEnumerable)valueToConvert)
+					{
+						((IList)collection).Add(genericToViewModel.Invoke(null, new[] { item, visitedDtos }));
+					}
+
+					valueToSet = collection;
 				}
 				else
                 {
@@ -143,6 +160,22 @@ namespace PresentationBase.DtoConverters
 					MethodInfo genericToDto = _internalToDtoInfo.MakeGenericMethod(dtoPropertyInfo.PropertyType);
 					valueToSet = genericToDto.Invoke(null, new[] { valueToConvert, visitedViewModels });
 				}
+				else if (IsTypeIList(dtoPropertyInfo.PropertyType) && IsTypeObservableViewModelCollection(propertyInfo.PropertyType))
+				{
+					if (valueToConvert == null)
+						continue;
+
+					var collection = Activator.CreateInstance(dtoPropertyInfo.PropertyType);
+
+					MethodInfo genericToDto = _internalToDtoInfo.MakeGenericMethod(dtoPropertyInfo.PropertyType.GenericTypeArguments.First());
+
+					foreach (var item in (IEnumerable)valueToConvert)
+					{
+						((IList)collection).Add(genericToDto.Invoke(null, new[] { item, visitedViewModels }));
+					}
+
+					valueToSet = collection;
+				}
 				else
 				{
 					valueToSet = valueToConvert;
@@ -152,6 +185,16 @@ namespace PresentationBase.DtoConverters
 			}
 
 			return result;
+		}
+
+		private static bool IsTypeIList(Type type)
+		{
+			return type.IsGenericType && type.GetInterfaces().Any(i => i.IsGenericType && (typeof(IList<>).IsAssignableFrom(i.GetGenericTypeDefinition()) || IsTypeIList(i)));
+		}
+
+		private static bool IsTypeObservableViewModelCollection(Type type)
+		{
+			return type.IsGenericType && typeof(ObservableViewModelCollection<>).IsAssignableFrom(type.GetGenericTypeDefinition());
 		}
 	}
 }
