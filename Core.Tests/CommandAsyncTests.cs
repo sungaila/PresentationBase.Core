@@ -24,20 +24,51 @@ namespace PresentationBase.Tests
             await cmd.ExecuteAsync(viewModel);
             Assert.IsTrue(cmd.Executed);
             Assert.IsFalse(cmd.IsWorking);
+        }
+
+        [TestMethod]
+        public async Task HandleExceptionAsync()
+        {
+            var viewModel = new TestViewModel();
 
             var cmd2 = (Test2Command)viewModel.Commands[typeof(Test2Command)];
             await Assert.ThrowsExceptionAsync<NotImplementedException>(async () => { await cmd2.ExecuteAsync(viewModel); });
+        }
+
+        [TestMethod]
+        public void HandleExceptionFireAndForget()
+        {
+            var viewModel = new TestViewModel();
+
+            var cmd2 = (Test2Command)viewModel.Commands[typeof(Test2Command)];
             Assert.IsFalse(cmd2.IsWorking);
             cmd2.Execute(viewModel);
+
+            while (cmd2.IsWorking) { }
+            Assert.IsFalse(cmd2.IsWorking);
+        }
+
+        [TestMethod]
+        public async Task HandleExceptionOverwrittenAsync()
+        {
+            var viewModel = new TestViewModel();
 
             var cmd3 = (Test3Command)viewModel.Commands[typeof(Test3Command)];
             Assert.IsFalse(cmd3.ExceptionHandled);
             await Assert.ThrowsExceptionAsync<NotImplementedException>(async () => { await cmd3.ExecuteAsync(viewModel); });
             Assert.IsFalse(cmd3.ExceptionHandled);
             Assert.IsFalse(cmd3.IsWorking);
+        }
+
+        [TestMethod]
+        public void HandleExceptionOverwrittenFireAndForget()
+        {
+            var viewModel = new TestViewModel();
+
+            var cmd3 = (Test3Command)viewModel.Commands[typeof(Test3Command)];
+            Assert.IsFalse(cmd3.ExceptionHandled);
             cmd3.Execute(viewModel);
 
-            var stopwatch = Stopwatch.StartNew();
             while (cmd3.IsWorking) { }
             Assert.IsTrue(cmd3.ExceptionHandled);
             Assert.IsFalse(cmd3.IsWorking);

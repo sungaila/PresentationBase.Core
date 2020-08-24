@@ -27,19 +27,23 @@ namespace PresentationBase
 		/// Any uncaught exceptions will be handled in <see cref="HandleUncaughtException"/>.
 		/// </summary>
 		/// <param name="parameter">The view model this command is executed on.</param>
-		public sealed override async void Execute(TViewModel parameter)
+		public sealed override void Execute(TViewModel parameter)
 		{
 			try
 			{
 				IsWorking = true;
-				await ExecutionAsync(parameter);
+				ExecutionAsync(parameter)
+					.ContinueWith(task =>
+					{
+						if (task.IsFaulted)
+							HandleUncaughtException(parameter, task.Exception);
+
+						IsWorking = false;
+					});
 			}
 			catch (Exception ex)
 			{
 				HandleUncaughtException(parameter, ex);
-			}
-			finally
-			{
 				IsWorking = false;
 			}
 		}
@@ -72,10 +76,7 @@ namespace PresentationBase
 		/// </summary>
 		/// <param name="parameter">The view model this command was executed on.</param>
 		/// <param name="ex">The uncaught exception from execution.</param>
-		protected virtual void HandleUncaughtException(TViewModel parameter, Exception ex)
-		{
-			throw ex;
-		}
+		protected virtual void HandleUncaughtException(TViewModel parameter, Exception ex) { }
 
 		private bool _isWorking;
 
