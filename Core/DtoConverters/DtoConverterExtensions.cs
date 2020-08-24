@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace PresentationBase.DtoConverters
 {
@@ -17,9 +19,22 @@ namespace PresentationBase.DtoConverters
 		/// <returns>The converted view model.</returns>
 		public static TViewModel ToViewModel<TViewModel>(this object dto)
 			where TViewModel : ViewModel
+        {
+			return ToViewModel<TViewModel>(dto, new List<object>());
+        }
+
+		private static MethodInfo _internalToViewModelInfo = typeof(DtoConverterExtensions).GetMethod(nameof(ToViewModel), BindingFlags.Static | BindingFlags.NonPublic);
+
+		private static TViewModel ToViewModel<TViewModel>(object dto, List<object> visitedDtos)
+			where TViewModel : ViewModel
 		{
 			if (dto == null)
 				throw new ArgumentNullException(nameof(dto));
+
+			if (visitedDtos.Contains(dto))
+				throw new NotSupportedException("Cyclic relationships are not supported!");
+
+			visitedDtos.Add(dto);
 
 			var dtoAttrs = DtoAttribute.GetDtoAttributes(typeof(TViewModel));
 			if (!dtoAttrs.Any())
@@ -45,7 +60,23 @@ namespace PresentationBase.DtoConverters
 				if (dtoPropertyInfo == null)
 					throw new InvalidOperationException($"There is no property called {dtoPropertyAttr.PropertyName} for the data transfer object type {dtoAttr.Type.Name}.");
 
-				propertyInfo.SetValue(result, dtoPropertyInfo.GetValue(dto, null), null);
+				object? valueToConvert = dtoPropertyInfo.GetValue(dto, null);
+				object? valueToSet;
+
+				if (typeof(ViewModel).IsAssignableFrom(propertyInfo.PropertyType))
+                {
+					if (valueToConvert == null)
+						continue;
+
+					MethodInfo genericToViewModel = _internalToViewModelInfo.MakeGenericMethod(propertyInfo.PropertyType);
+					valueToSet = genericToViewModel.Invoke(null, new[] { valueToConvert, visitedDtos });
+				}
+				else
+                {
+					valueToSet = valueToConvert;
+				}
+
+				propertyInfo.SetValue(result, valueToSet, null);
 			}
 
 			return result;
@@ -60,9 +91,22 @@ namespace PresentationBase.DtoConverters
 		/// <returns>The converted data transfer object.</returns>
 		public static TDto ToDto<TDto>(this ViewModel viewModel)
 			where TDto : class
+        {
+			return ToDto<TDto>(viewModel, new List<ViewModel>());
+        }
+
+		private static MethodInfo _internalToDtoInfo = typeof(DtoConverterExtensions).GetMethod(nameof(ToDto), BindingFlags.Static | BindingFlags.NonPublic);
+
+		private static TDto ToDto<TDto>(ViewModel viewModel, List<ViewModel> visitedViewModels)
+			where TDto : class
 		{
 			if (viewModel == null)
 				throw new ArgumentNullException(nameof(viewModel));
+
+			if (visitedViewModels.Contains(viewModel))
+				throw new NotSupportedException("Cyclic relationships are not supported!");
+
+			visitedViewModels.Add(viewModel);
 
 			var dtoAttrs = DtoAttribute.GetDtoAttributes(viewModel.GetType());
 			if (!dtoAttrs.Any())
@@ -88,7 +132,23 @@ namespace PresentationBase.DtoConverters
 				if (dtoPropertyInfo == null)
 					throw new InvalidOperationException($"There is no property called {dtoPropertyAttr.PropertyName} for the data transfer object type {dtoAttr.Type.Name}.");
 
-				dtoPropertyInfo.SetValue(result, propertyInfo.GetValue(viewModel, null), null);
+				object? valueToConvert = propertyInfo.GetValue(viewModel, null);
+				object? valueToSet;
+
+				if (typeof(ViewModel).IsAssignableFrom(propertyInfo.PropertyType))
+				{
+					if (valueToConvert == null)
+						continue;
+
+					MethodInfo genericToDto = _internalToDtoInfo.MakeGenericMethod(dtoPropertyInfo.PropertyType);
+					valueToSet = genericToDto.Invoke(null, new[] { valueToConvert, visitedViewModels });
+				}
+				else
+				{
+					valueToSet = valueToConvert;
+				}
+
+				dtoPropertyInfo.SetValue(result, valueToSet, null);
 			}
 
 			return result;

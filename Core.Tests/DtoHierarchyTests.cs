@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PresentationBase.DtoConverters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace PresentationBase.Tests
 {
@@ -58,7 +60,9 @@ namespace PresentationBase.Tests
             Assert.IsNull(viewModel.Nickname);
             Assert.IsNull(viewModel.FavoriteFood);
             Assert.IsNotNull(viewModel.Fur);
-            Assert.AreEqual(dto.Fur.Description, viewModel.Fur!.Description);
+            Assert.AreEqual(viewModel, viewModel.Fur!.ParentViewModel);
+            Assert.AreEqual(viewModel, viewModel.Fur.RootViewModel);
+            Assert.AreEqual(dto.Fur.Description, viewModel.Fur.Description);
             Assert.IsNull(viewModel.Paws);
 
             var reversedDto = viewModel.ToDto<CatDataTransferObject>();
@@ -106,6 +110,95 @@ namespace PresentationBase.Tests
             Assert.AreEqual(viewModel.Paws[1].Steps, reversedDto.Paws.ElementAt(1).Steps);
             Assert.AreEqual(viewModel.Paws[2].Steps, reversedDto.Paws.ElementAt(2).Steps);
             Assert.AreEqual(viewModel.Paws[3].Steps, reversedDto.Paws.ElementAt(3).Steps);
+        }
+
+        [TestMethod]
+        public void CircularRelationshipsSingle()
+        {
+            var dto1 = new SelfReferencingDataTransferObject
+            {
+                Other = new SelfReferencingDataTransferObject
+                {
+                    Other = new SelfReferencingDataTransferObject()
+                }
+            };
+            Assert.IsNotNull(dto1.ToViewModel<SelfReferencingViewModel>().ToDto<SelfReferencingDataTransferObject>());
+
+            var dto2 = new SelfReferencingDataTransferObject();
+            dto2.Other = new SelfReferencingDataTransferObject
+            {
+                Other = new SelfReferencingDataTransferObject
+                {
+                    Other = dto2
+                }
+            };
+
+            try
+            {
+                dto2.ToViewModel<SelfReferencingViewModel>();
+                Assert.Fail("Expected the convertion of cyclic relationships to fail.");
+            }
+            catch (Exception) { }
+
+            var viewModel = new SelfReferencingViewModel();
+            viewModel.Other = new SelfReferencingViewModel
+            {
+                Other = new SelfReferencingViewModel
+                {
+                    Other = viewModel
+                }
+            };
+
+            try
+            {
+                viewModel.ToDto<SelfReferencingDataTransferObject>();
+                Assert.Fail("Expected the conversion of cyclic relationships to fail.");
+            }
+            catch (Exception) { }
+        }
+
+        [TestMethod]
+        public void CircularRelationshipsMultiple()
+        {
+            var dto1 = new SelfReferencingDataTransferObject
+            {
+                Others = new List<SelfReferencingDataTransferObject>(new[] {
+                    new SelfReferencingDataTransferObject
+                    {
+                        Others = new List<SelfReferencingDataTransferObject>(new[] { new SelfReferencingDataTransferObject() })
+                    }
+                })
+            };
+            Assert.IsNotNull(dto1.ToViewModel<SelfReferencingViewModel>().ToDto<SelfReferencingDataTransferObject>());
+
+            var dto2 = new SelfReferencingDataTransferObject();
+            dto2.Other = new SelfReferencingDataTransferObject
+            {
+                Others = new List<SelfReferencingDataTransferObject>(new[] {
+                    new SelfReferencingDataTransferObject
+                    {
+                        Others = new List<SelfReferencingDataTransferObject>(new[] { dto2 })
+                    }
+                })
+            };
+
+            try
+            {
+                dto2.ToViewModel<SelfReferencingViewModel>();
+                Assert.Fail("Expected the conversion of cyclic relationships to fail.");
+            }
+            catch (Exception) { }
+
+            var viewModel = new SelfReferencingViewModel();
+            viewModel.Others = new ObservableViewModelCollection<SelfReferencingViewModel>(viewModel);
+            viewModel.Others.Add(viewModel);
+
+            try
+            {
+                viewModel.ToDto<SelfReferencingDataTransferObject>();
+                Assert.Fail("Expected the convertion of cyclic relationships to fail.");
+            }
+            catch (Exception) { }
         }
 
         class CatDataTransferObject
@@ -192,6 +285,35 @@ namespace PresentationBase.Tests
             {
                 get => _steps;
                 set => SetProperty(ref _steps, value);
+            }
+        }
+
+        class SelfReferencingDataTransferObject
+        {
+            public SelfReferencingDataTransferObject? Other { get; set; }
+
+            public List<SelfReferencingDataTransferObject>? Others { get; set; }
+        }
+
+        [Dto(typeof(SelfReferencingDataTransferObject))]
+        class SelfReferencingViewModel : ViewModel
+        {
+            private SelfReferencingViewModel? _other;
+
+            [DtoProperty]
+            public SelfReferencingViewModel? Other
+            {
+                get => _other;
+                set => SetProperty(ref _other, value);
+            }
+
+            private ObservableViewModelCollection<SelfReferencingViewModel>? _others;
+
+            [DtoProperty]
+            public ObservableViewModelCollection<SelfReferencingViewModel>? Others
+            {
+                get => _others;
+                set => SetProperty(ref _others, value);
             }
         }
     }
