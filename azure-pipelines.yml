@@ -54,10 +54,8 @@ jobs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
-      includesymbols: true
       versioningScheme: 'off'
-      buildProperties: '-p:VersionPrefix=1.0.0 -p:VersionSuffix=debug+$(Build.SourceVersion)'
-      verbosityPack: 'Diagnostic'
+      buildProperties: '-p:PackageVersion=1.0.0-debug+$(Build.SourceVersion)'
 
   - task: PublishPipelineArtifact@1
     inputs:
