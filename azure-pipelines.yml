@@ -48,3 +48,20 @@ jobs:
       targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
       artifact: 'PresentationBase.Core debug build ($(Build.SourceVersion))'
       publishLocation: 'pipeline'
+      
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'pack'
+      packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
+      packDirectory: '$(Build.ArtifactStagingDirectory)\nuget'
+      nobuild: true
+      includesymbols: true
+      includesource: true
+      versioningScheme: 'byBuildNumber'
+      buildProperties: '--version-suffix alpha+$(Build.SourceVersion)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)\nuget'
+      ArtifactName: 'PresentationBase.Core debug NuGet package ($(Build.SourceVersion))'
+      publishLocation: 'Container'
