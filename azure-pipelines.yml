@@ -31,7 +31,7 @@ jobs:
       msbuildArchitecture: 'x64'
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Build.SourcesDirectory)\Core\bin'
+      targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
       artifact: 'Assemblies ($(buildConfiguration))'
       publishLocation: 'pipeline'
   - task: PublishPipelineArtifact@1
@@ -45,6 +45,7 @@ jobs:
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       versioningScheme: 'off'
       buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
+      basePath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
@@ -55,6 +56,7 @@ jobs:
   displayName: 'Test'
   dependsOn: Build
   steps:
+  - checkout: none
   - task: DownloadPipelineArtifact@2
     inputs:
       buildType: 'current'
