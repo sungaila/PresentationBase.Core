@@ -54,7 +54,7 @@ jobs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
-      buildProperties: 'PackageVersion=\$(Version)-ci+$(Build.SourceVersion)'
+      buildProperties: 'PackageVersion=$(Version)-ci+$(Build.SourceVersion)'
 
   - task: PublishPipelineArtifact@1
     inputs:
