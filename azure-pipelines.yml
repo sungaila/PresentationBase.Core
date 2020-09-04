@@ -38,6 +38,7 @@ jobs:
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
       versioningScheme: 'off'
+      buildProperties: 'VersionSuffix=ci'
   - task: PublishPipelineArtifact@1
     displayName: 'Publish NuGet package'
     inputs:
