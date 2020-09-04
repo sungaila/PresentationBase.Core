@@ -35,15 +35,30 @@ jobs:
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
       buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)\Core\bin'
+      artifact: 'Core'
+      publishLocation: 'pipeline'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin'
+      artifact: 'Core.Tests'
+      publishLocation: 'pipeline'
   
 - job: Test
   displayName: 'Test'
   dependsOn: Build
   steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'current'
+      artifactName: 'Core.Tests'
+      targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)\**\PresentationBase.Core.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
@@ -54,9 +69,14 @@ jobs:
   displayName: 'Publish assemblies'
   dependsOn: Test
   steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'current'
+      artifactName: 'Core'
+      targetPath: '$(Pipeline.Workspace)'
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
+      targetPath: '$(Pipeline.Workspace)\$(buildConfiguration)'
       artifact: 'Assemblies ($(buildConfiguration))'
       publishLocation: 'pipeline'
 
@@ -64,6 +84,11 @@ jobs:
   displayName: 'Publish NuGet package'
   dependsOn: Test
   steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'current'
+      artifactName: 'Core'
+      targetPath: '$(Pipeline.Workspace)'
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
