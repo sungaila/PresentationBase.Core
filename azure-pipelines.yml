@@ -46,5 +46,5 @@ jobs:
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
-      artifact: 'CI debug build'
+      artifact: 'PresentationBase.Core debug build ($(Build.SourceVersion))'
       publishLocation: 'pipeline'
