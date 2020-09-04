@@ -10,7 +10,6 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
@@ -18,17 +17,13 @@ jobs:
 - job: Build
   displayName: 'Build'
   steps:
-  - task: NuGetToolInstaller@1
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
     inputs:
-      restoreSolution: '$(solution)'
-  - task: VSBuild@1
+      command: 'restore'
+  - task: DotNetCoreCLI@2
     inputs:
-      solution: '$(solution)'
-      platform: '$(buildPlatform)'
-      configuration: '$(buildConfiguration)'
-      maximumCpuCount: true
-      msbuildArchitecture: 'x64'
+      command: 'build'
+      configuration: $(buildConfiguration)
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
@@ -36,16 +31,16 @@ jobs:
       publishLocation: 'pipeline'
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin'
-      artifact: 'Tests'
+      targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)'
+      artifact: 'PresentationBase.Core.Tests'
       publishLocation: 'pipeline'
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
     inputs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
+      nobuild: true
       versioningScheme: 'off'
       buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
-      basePath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
@@ -60,12 +55,12 @@ jobs:
   - task: DownloadPipelineArtifact@2
     inputs:
       buildType: 'current'
-      artifactName: 'Tests'
+      artifactName: 'PresentationBase.Core.Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\$(buildConfiguration)\**\PresentationBase.Core.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
