@@ -6,11 +6,12 @@
     <RootNamespace>PresentationBase</RootNamespace>
     <EmbedAllSources>true</EmbedAllSources>
     <AssemblyOriginatorKeyFile>PresentationBase.Core.pfx</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>3.2.0</Version>
+    <VersionPrefix>3.2.0</VersionPrefix>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -37,12 +38,15 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <!-- Debug builds -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <VersionSuffix>debug</VersionSuffix>
+  </PropertyGroup>
+
   <!-- Release builds -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <SignAssembly>true</SignAssembly>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <DocumentationFile>bin\Release\PresentationBase.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <!-- NuGet Icon -->

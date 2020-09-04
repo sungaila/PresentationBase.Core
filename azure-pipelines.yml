@@ -21,7 +21,7 @@ jobs:
     displayName: 'Build solution'
     inputs:
       command: 'build'
-      buildProperties: Platform=$(buildPlatform)
+      buildProperties: Platform=$(buildPlatform);VersionSuffix=ci+$(Build.SourceVersion)
       configuration: $(buildConfiguration)
   - task: PublishPipelineArtifact@1
     displayName: 'Publish project assemblies'
@@ -42,7 +42,6 @@ jobs:
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
       versioningScheme: 'off'
-      buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
   - task: PublishPipelineArtifact@1
     displayName: 'Publish NuGet package'
     inputs:
