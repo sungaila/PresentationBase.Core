@@ -58,10 +58,10 @@ jobs:
       includesymbols: true
       includesource: true
       versioningScheme: 'off'
-      buildProperties: '/p:VersionPrefix="0.0.0" --version-suffix "alpha+$(Build.SourceVersion)"'
+      verbosityPack: 'Diagnostic'
 
-  - task: PublishBuildArtifacts@1
+  - task: PublishPipelineArtifact@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)\nuget'
-      ArtifactName: 'PresentationBase.Core debug NuGet package ($(Build.SourceVersion))'
-      publishLocation: 'Container'
+      targetPath: '$(Build.ArtifactStagingDirectory)\nuget'
+      artifact: 'PresentationBase.Core debug NuGet package ($(Build.SourceVersion))'
+      publishLocation: 'pipeline'
