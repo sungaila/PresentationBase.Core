@@ -6,41 +6,45 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
-
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
-steps:
-- task: NuGetToolInstaller@1
+jobs:
+- job: BuildTestPublish
+  displayName: 'Build, test & publish'
+  timeoutInMinutes: 30
+  pool:
+    vmImage: 'windows-latest'
+  steps:
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+  - task: NuGetToolInstaller@1
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    maximumCpuCount: true
-    msbuildArchitecture: 'x64'
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '$(solution)'
 
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)\**\PresentationBase.Core.Tests.dll'
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runTestsInIsolation: true
-    codeCoverageEnabled: true
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  - task: VSBuild@1
+    inputs:
+      solution: '$(solution)'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+      maximumCpuCount: true
+      msbuildArchitecture: 'x64'
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
-    artifact: 'CI debug build'
-    publishLocation: 'pipeline'
+  - task: VSTest@2
+    inputs:
+      testSelector: 'testAssemblies'
+      testAssemblyVer2: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)\**\PresentationBase.Core.Tests.dll'
+      searchFolder: '$(System.DefaultWorkingDirectory)'
+      runTestsInIsolation: true
+      codeCoverageEnabled: true
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
+      artifact: 'CI debug build'
+      publishLocation: 'pipeline'
