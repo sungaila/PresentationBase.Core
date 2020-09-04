@@ -18,21 +18,25 @@ jobs:
   displayName: 'Build'
   steps:
   - task: DotNetCoreCLI@2
+    displayName: 'Build solution'
     inputs:
       command: 'build'
       buildProperties: Platform=$(buildPlatform)
       configuration: $(buildConfiguration)
   - task: PublishPipelineArtifact@1
+    displayName: 'Publish project assemblies'
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
       artifact: 'Assemblies ($(buildConfiguration))'
       publishLocation: 'pipeline'
   - task: PublishPipelineArtifact@1
+    displayName: 'Publish test assemblies'
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)'
       artifact: 'Tests'
       publishLocation: 'pipeline'
   - task: DotNetCoreCLI@2
+    displayName: 'Create NuGet package'
     inputs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
@@ -40,6 +44,7 @@ jobs:
       versioningScheme: 'off'
       buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
   - task: PublishPipelineArtifact@1
+    displayName: 'Publish NuGet package'
     inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
       artifact: 'NuGet package ($(buildConfiguration))'
@@ -50,12 +55,15 @@ jobs:
   dependsOn: Build
   steps:
   - checkout: none
+    displayName: 'Skip checkout'
   - task: DownloadPipelineArtifact@2
+    displayName: 'Download test assemblies'
     inputs:
       buildType: 'current'
       artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
+    displayName: 'Run tests'
     inputs:
       testSelector: 'testAssemblies'
       testAssemblyVer2: '$(Pipeline.Workspace)\**\PresentationBase.Core.Tests.dll'
