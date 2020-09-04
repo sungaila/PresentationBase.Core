@@ -21,8 +21,7 @@ jobs:
     displayName: 'Build solution'
     inputs:
       command: 'build'
-      buildProperties: Platform=$(buildPlatform);VersionSuffix=ci+$(Build.SourceVersion)
-      configuration: $(buildConfiguration)
+      arguments: '-c $(buildConfiguration) -p:Platform=$(buildPlatform) -p:VersionSuffix=ci+$(Build.SourceVersion)'
   - task: PublishPipelineArtifact@1
     displayName: 'Publish project assemblies'
     inputs:
