@@ -17,7 +17,6 @@ variables:
 jobs:
 - job: Build
   displayName: Build
-  timeoutInMinutes: 30
   steps:
   - task: NuGetToolInstaller@1
   - task: NuGetCommand@2
@@ -39,7 +38,7 @@ jobs:
   
 - job: Test
   displayName: 'Test'
-  timeoutInMinutes: 30
+  dependsOn: Build
   steps:
   - task: VSTest@2
     inputs:
@@ -53,7 +52,7 @@ jobs:
 
 - job: PublishAssemblies
   displayName: 'Publish assemblies'
-  timeoutInMinutes: 30
+  dependsOn: Test
   steps:
   - task: PublishPipelineArtifact@1
     inputs:
@@ -63,7 +62,7 @@ jobs:
 
 - job: PublishNuGet
   displayName: 'Publish NuGet package'
-  timeoutInMinutes: 30
+  dependsOn: Test
   steps:
   - task: PublishPipelineArtifact@1
     inputs:
