@@ -6,25 +6,23 @@
 trigger:
 - master
 
+pool:
+  vmImage: 'windows-latest'
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
 jobs:
-- job: BuildTestPublish
-  displayName: 'Build, test & publish'
+- job: Build
+  displayName: Build
   timeoutInMinutes: 30
-  pool:
-    vmImage: 'windows-latest'
   steps:
-
   - task: NuGetToolInstaller@1
-
   - task: NuGetCommand@2
     inputs:
       restoreSolution: '$(solution)'
-
   - task: VSBuild@1
     inputs:
       solution: '$(solution)'
@@ -32,7 +30,17 @@ jobs:
       configuration: '$(buildConfiguration)'
       maximumCpuCount: true
       msbuildArchitecture: 'x64'
-
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'pack'
+      packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
+      nobuild: true
+      buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
+  
+- job: Test
+  displayName: 'Test'
+  timeoutInMinutes: 30
+  steps:
   - task: VSTest@2
     inputs:
       testSelector: 'testAssemblies'
@@ -43,19 +51,20 @@ jobs:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
 
+- job: PublishAssemblies
+  displayName: 'Publish assemblies'
+  timeoutInMinutes: 30
+  steps:
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
       artifact: 'Assemblies ($(buildConfiguration))'
       publishLocation: 'pipeline'
-      
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'pack'
-      packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
-      nobuild: true
-      buildProperties: 'PackageVersion=$(Version)-ci+$(Build.SourceVersion)'
 
+- job: PublishNuGet
+  displayName: 'Publish NuGet package'
+  timeoutInMinutes: 30
+  steps:
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
