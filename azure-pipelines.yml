@@ -54,7 +54,7 @@ jobs:
   dependsOn: Build
   steps:
   - checkout: none
-    enabled: false
+    displayName: 'Skip checkout'
   - task: DownloadPipelineArtifact@2
     displayName: 'Download test assemblies'
     inputs:
