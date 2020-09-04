@@ -29,11 +29,11 @@ jobs:
       configuration: '$(buildConfiguration)'
       maximumCpuCount: true
       msbuildArchitecture: 'x64'
-  - task: DotNetCoreCLI@2
+  - task: NuGetCommand@2
     inputs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
-      nobuild: true
+      versioningScheme: 'off'
       buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
   - task: PublishPipelineArtifact@1
     inputs:
@@ -45,6 +45,11 @@ jobs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
       artifact: 'NuGet package ($(buildConfiguration))'
       publishLocation: 'pipeline'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin'
+      artifact: 'Core.Tests'
+      publishLocation: 'pipeline'
   
 - job: Test
   displayName: 'Test'
@@ -53,12 +58,12 @@ jobs:
   - task: DownloadPipelineArtifact@2
     inputs:
       buildType: 'current'
-      artifactName: 'Assemblies ($(buildConfiguration))'
+      artifactName: 'Core.Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\**\PresentationBase.Core.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\$(buildConfiguration)\**\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
