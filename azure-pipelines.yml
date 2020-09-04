@@ -46,7 +46,7 @@ jobs:
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
-      artifact: 'PresentationBase.Core debug build ($(Build.SourceVersion))'
+      artifact: 'Assemblies debug ($(Build.SourceVersion))'
       publishLocation: 'pipeline'
       
   - task: DotNetCoreCLI@2
@@ -54,11 +54,10 @@ jobs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
-      versioningScheme: 'off'
-      buildProperties: '-p:PackageVersion=1.0.0-debug+$(Build.SourceVersion)'
+      buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
 
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
-      artifact: 'PresentationBase.Core debug NuGet package ($(Build.SourceVersion))'
+      artifact: 'NuGet packages debug ($(Build.SourceVersion))'
       publishLocation: 'pipeline'
