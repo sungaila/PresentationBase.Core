@@ -55,9 +55,8 @@ jobs:
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
       includesymbols: true
-      includesource: true
       versioningScheme: 'off'
-      buildProperties: '/p:VersionPrefix="1.0.0" /p:VersionSuffix="debug+$(Build.SourceVersion)"'
+      buildProperties: '-p:VersionPrefix=1.0.0 -p:VersionSuffix=debug+$(Build.SourceVersion)'
       verbosityPack: 'Diagnostic'
 
   - task: PublishPipelineArtifact@1
