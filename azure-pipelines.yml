@@ -17,8 +17,7 @@ jobs:
     displayName: 'Build solution'
     inputs:
       command: 'build'
-      configuration: $(buildConfiguration)
-      arguments: '-p:VersionSuffix=ci'
+      arguments: '-c $(buildConfiguration) -p:VersionSuffix=ci'
   - task: PublishPipelineArtifact@1
     displayName: 'Publish project assemblies'
     inputs:
@@ -35,6 +34,7 @@ jobs:
     displayName: 'Create NuGet package'
     inputs:
       command: 'pack'
+      arguments: '-c $(buildConfiguration)'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
       nobuild: true
       versioningScheme: 'off'
