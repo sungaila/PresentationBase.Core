@@ -19,10 +19,8 @@ jobs:
   steps:
   - task: DotNetCoreCLI@2
     inputs:
-      command: 'restore'
-  - task: DotNetCoreCLI@2
-    inputs:
       command: 'build'
+      buildProperties: Platform=$(buildPlatform)
       configuration: $(buildConfiguration)
   - task: PublishPipelineArtifact@1
     inputs:
@@ -32,7 +30,7 @@ jobs:
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)'
-      artifact: 'PresentationBase.Core.Tests'
+      artifact: 'Tests'
       publishLocation: 'pipeline'
   - task: DotNetCoreCLI@2
     inputs:
@@ -55,7 +53,7 @@ jobs:
   - task: DownloadPipelineArtifact@2
     inputs:
       buildType: 'current'
-      artifactName: 'PresentationBase.Core.Tests'
+      artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
     inputs:
