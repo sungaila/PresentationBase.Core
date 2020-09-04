@@ -57,7 +57,7 @@ jobs:
       nobuild: true
       includesymbols: true
       includesource: true
-      versioningScheme: 'byBuildNumber'
+      versioningScheme: 'off'
       buildProperties: '--version-suffix alpha+$(Build.SourceVersion)'
 
   - task: PublishBuildArtifacts@1
