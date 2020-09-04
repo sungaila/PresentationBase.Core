@@ -9,10 +9,6 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Debug'
-
 jobs:
 - job: Build
   displayName: 'Build'
@@ -21,7 +17,7 @@ jobs:
     displayName: 'Build solution'
     inputs:
       command: 'build'
-      arguments: '-c $(buildConfiguration) -p:Platform=$(buildPlatform) -p:VersionSuffix=ci+$(Build.SourceVersion)'
+      arguments: '-p:VersionSuffix=ci'
   - task: PublishPipelineArtifact@1
     displayName: 'Publish project assemblies'
     inputs:
