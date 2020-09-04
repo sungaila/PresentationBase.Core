@@ -29,6 +29,16 @@ jobs:
       configuration: '$(buildConfiguration)'
       maximumCpuCount: true
       msbuildArchitecture: 'x64'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)\Core\bin'
+      artifact: 'Assemblies ($(buildConfiguration))'
+      publishLocation: 'pipeline'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin'
+      artifact: 'Tests'
+      publishLocation: 'pipeline'
   - task: NuGetCommand@2
     inputs:
       command: 'pack'
@@ -37,18 +47,8 @@ jobs:
       buildProperties: 'PackageVersion=1.0.0-ci+$(Build.SourceVersion)'
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Build.SourcesDirectory)\Core\bin'
-      artifact: 'Assemblies ($(buildConfiguration))'
-      publishLocation: 'pipeline'
-  - task: PublishPipelineArtifact@1
-    inputs:
       targetPath: '$(Build.ArtifactStagingDirectory)'
       artifact: 'NuGet package ($(buildConfiguration))'
-      publishLocation: 'pipeline'
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: '$(Build.SourcesDirectory)\Core.Tests\bin'
-      artifact: 'Core.Tests'
       publishLocation: 'pipeline'
   
 - job: Test
@@ -58,7 +58,7 @@ jobs:
   - task: DownloadPipelineArtifact@2
     inputs:
       buildType: 'current'
-      artifactName: 'Core.Tests'
+      artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
     inputs:
