@@ -58,7 +58,7 @@ jobs:
       includesymbols: true
       includesource: true
       versioningScheme: 'off'
-      buildProperties: '--version-suffix alpha'
+      buildProperties: '/p:VersionPrefix="0.0.0" --version-suffix "alpha+$(Build.SourceVersion)"'
 
   - task: PublishBuildArtifacts@1
     inputs:
