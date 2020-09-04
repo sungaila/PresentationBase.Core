@@ -12,7 +12,7 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Debug'
+  buildConfiguration: 'Release'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -26,6 +26,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    clean: true
     maximumCpuCount: true
     msbuildArchitecture: 'x64'
 
@@ -34,6 +35,13 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: '**\bin\Debug\netcoreapp3.1\PresentationBase.Core.Tests.dll'
     searchFolder: '$(System.DefaultWorkingDirectory)'
+    runTestsInIsolation: true
     codeCoverageEnabled: true
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    publishLocation: 'pipeline'
+    artifact: 
