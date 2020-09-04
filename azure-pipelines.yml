@@ -32,7 +32,7 @@ steps:
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies'
-    testAssemblyVer2: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)\**\*'
+    testAssemblyVer2: '$(Build.SourcesDirectory)\Core.Tests\bin\$(buildConfiguration)\**\PresentationBase.Core.Tests.dll'
     searchFolder: '$(System.DefaultWorkingDirectory)'
     runTestsInIsolation: true
     codeCoverageEnabled: true
@@ -42,5 +42,5 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.SourcesDirectory)\Core\bin\$(buildConfiguration)'
-    artifact: 
+    artifact: 'CI debug build'
     publishLocation: 'pipeline'
