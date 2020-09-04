@@ -53,15 +53,15 @@ jobs:
     inputs:
       command: 'pack'
       packagesToPack: '$(Build.SourcesDirectory)\Core\Core.csproj'
-      packDirectory: '$(Build.ArtifactStagingDirectory)\nuget'
+      packDirectory: '$(Build.ArtifactStagingDirectory)'
       nobuild: true
       includesymbols: true
       includesource: true
       versioningScheme: 'off'
-      verbosityPack: 'Diagnostic'
+      buildProperties: '/p:VersionSuffix="debug+$(Build.SourceVersion)"'
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Build.ArtifactStagingDirectory)\nuget'
+      targetPath: '$(Build.ArtifactStagingDirectory)'
       artifact: 'PresentationBase.Core debug NuGet package ($(Build.SourceVersion))'
       publishLocation: 'pipeline'
