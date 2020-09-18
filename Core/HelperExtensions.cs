@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace PresentationBase
 {
@@ -15,6 +15,16 @@ namespace PresentationBase
                 return false;
 
             return HasGenericTypeArgument(type.BaseType, genericType);
+        }
+
+        public static bool IsTypeIList(this Type type)
+        {
+            return type.IsGenericType && type.GetInterfaces().Any(i => i.IsGenericType && (typeof(IList<>).IsAssignableFrom(i.GetGenericTypeDefinition()) || IsTypeIList(i)));
+        }
+
+        public static bool IsTypeObservableViewModelCollection(this Type type)
+        {
+            return type.IsGenericType && typeof(ObservableViewModelCollection<>).IsAssignableFrom(type.GetGenericTypeDefinition());
         }
     }
 }

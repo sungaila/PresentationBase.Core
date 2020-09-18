@@ -63,7 +63,7 @@ namespace PresentationBase
 		/// Raises the <see cref="PropertyChanging"/> event for the given property name.
 		/// </summary>
 		/// <param name="propertyName">The name of the property which is about to be changed. When omitted the property name will be the member name of the caller (which it is when called from the view model property setter).</param>
-		private void RaisePropertyChanging(string propertyName)
+		protected void RaisePropertyChanging(string propertyName)
 		{
 			if (propertyName == null)
 				throw new ArgumentNullException(nameof(propertyName));
@@ -420,6 +420,10 @@ namespace PresentationBase
 		/// <summary>
 		/// Indicates that this view model is changing and others should avoid interfering.
 		/// </summary>
+		/// <remarks>
+		/// There is no interaction with this property in the <see cref="ViewModel"/> base class.
+		/// Derived classes can use it for their own purposes.
+		/// </remarks>
 		public bool IsRefreshing
 		{
 			get => _isRefreshing;

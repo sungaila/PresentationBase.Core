@@ -131,16 +131,16 @@ namespace PresentationBase.Tests
             bool observeRaised = false;
             bool observe2Raised = false;
             string? observedProperty = null;
-            Action observeHandler = () =>
+            void observeHandler()
             {
                 observeRaised = true;
-            };
-            Action<string> observeHandler2 = (name) =>
+            }
+            void observeHandler2(string name)
             {
                 Assert.AreNotEqual("NotExisting", name);
                 observe2Raised = true;
                 observedProperty = name;
-            };
+            }
             viewModel.Children.Observe(observeHandler, nameof(TestViewModel.Age), nameof(TestViewModel.FunLevel), "NotExisting");
             viewModel.Children.Observe(observeHandler2, nameof(TestViewModel.Age), nameof(TestViewModel.FunLevel), "NotExisting");
 

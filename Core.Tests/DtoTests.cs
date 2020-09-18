@@ -82,7 +82,7 @@ namespace PresentationBase.Tests
         {
             var dto = new AwesomeTransferDataObject { PersonName = "John" };
             Assert.AreEqual("John", dto.PersonName);
-            Assert.AreEqual(default(int), dto.PersonAge);
+            Assert.AreEqual(default, dto.PersonAge);
 
             var viewModel = dto.ToViewModel<AwesomeViewModel>();
             Assert.IsNotNull(viewModel);
@@ -105,7 +105,7 @@ namespace PresentationBase.Tests
         {
             var dto = new AwesomeTransferDataObject { PersonName = "John" };
             Assert.AreEqual("John", dto.PersonName);
-            Assert.AreEqual(default(int), dto.PersonAge);
+            Assert.AreEqual(default, dto.PersonAge);
 
             var viewModel = dto.ToViewModel<Dummy4ViewModel>();
             Assert.IsNotNull(viewModel);
@@ -125,7 +125,7 @@ namespace PresentationBase.Tests
             Assert.IsNotNull(viewModel2);
             Assert.IsInstanceOfType(viewModel2, typeof(Dummy4ViewModel));
             Assert.AreEqual(dto2.PersonName, viewModel2.Name);
-            Assert.AreEqual(default(int), viewModel2.PersonAge);
+            Assert.AreEqual(default, viewModel2.PersonAge);
             Assert.AreEqual(dto2.TownName, viewModel2.TownName);
 
             var reversedDto2 = viewModel2.ToDto<AverageTransferDataObject>();
@@ -140,7 +140,7 @@ namespace PresentationBase.Tests
         {
             var dto = new AwesomeTransferDataObject { PersonName = "John" };
             Assert.AreEqual("John", dto.PersonName);
-            Assert.AreEqual(default(int), dto.PersonAge);
+            Assert.AreEqual(default, dto.PersonAge);
 
             var viewModel = dto.ToViewModel<InheritedAwesomenessViewModel>();
             Assert.IsNotNull(viewModel);

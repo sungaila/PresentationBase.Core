@@ -38,8 +38,8 @@ namespace PresentationBase.Tests
         public void Commands()
         {
             var viewModel = new TestViewModel();
-            Assert.IsFalse(viewModel.Commands.TryGetValue(typeof(IViewModelCommand), out IViewModelCommand? cmd));
-            Assert.IsFalse(viewModel.Commands.TryGetValue(typeof(DummyCommand), out IViewModelCommand? cmd2));
+            Assert.IsFalse(viewModel.Commands.TryGetValue(typeof(IViewModelCommand), out _));
+            Assert.IsFalse(viewModel.Commands.TryGetValue(typeof(DummyCommand), out _));
             Assert.IsTrue(viewModel.Commands.TryGetValue(typeof(TestCommand), out IViewModelCommand? cmd3));
             Assert.IsInstanceOfType(cmd3, typeof(TestCommand));
         }

@@ -190,8 +190,10 @@ namespace PresentationBase.Tests
             catch (Exception) { }
 
             var viewModel = new SelfReferencingViewModel();
-            viewModel.Others = new ObservableViewModelCollection<SelfReferencingViewModel>(viewModel);
-            viewModel.Others.Add(viewModel);
+            viewModel.Others = new ObservableViewModelCollection<SelfReferencingViewModel>(viewModel)
+            {
+                viewModel
+            };
 
             try
             {
