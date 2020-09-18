@@ -76,8 +76,19 @@ namespace PresentationBase.Tests
             errors = viewModel.GetErrors(nameof(TestViewModel.Name)) as IEnumerable<string>;
             Assert.AreEqual("Name cannot be null or empty!", errors.Single());
 
+            bool propertyChangingRaised = false;
             bool propertyChangedRaised = false;
             bool errorsChangedRaised = false;
+            viewModel.PropertyChanging += (s, e) =>
+            {
+                Assert.AreEqual(viewModel, s);
+
+                if (e.PropertyName != nameof(TestViewModel.Name))
+                    return;
+
+                propertyChangingRaised = true;
+                Assert.IsFalse(propertyChangedRaised, "Changing must be raised before Changed.");
+            };
             viewModel.PropertyChanged += (s, e) =>
             {
                 Assert.AreEqual(viewModel, s);
@@ -86,6 +97,7 @@ namespace PresentationBase.Tests
                     return;
 
                 propertyChangedRaised = true;
+                Assert.IsTrue(propertyChangingRaised, "Changing must be raised before Changed.");
             };
             viewModel.ErrorsChanged += (s, e) =>
             {
@@ -100,12 +112,14 @@ namespace PresentationBase.Tests
 
             // PropertyChanged must not be raised (value is unchanged)
             viewModel.Name = string.Empty;
+            Assert.IsFalse(propertyChangingRaised);
             Assert.IsFalse(propertyChangedRaised);
             Assert.IsFalse(errorsChangedRaised);
             Assert.IsFalse(viewModel.IsDirty);
 
             // PropertyChanged must be raised
             viewModel.Name = "JC Denton";
+            Assert.IsTrue(propertyChangingRaised);
             Assert.IsTrue(propertyChangedRaised);
             Assert.IsTrue(propertyChangedRaised);
             Assert.IsTrue(viewModel.IsDirty);

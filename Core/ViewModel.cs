@@ -13,7 +13,7 @@ namespace PresentationBase
 	/// The base implementation of every view model.
 	/// </summary>
 	public abstract class ViewModel
-		: INotifyPropertyChanged, INotifyDataErrorInfo
+		: INotifyPropertyChanging, INotifyPropertyChanged, INotifyDataErrorInfo
 	{
 		/// <summary>
 		/// Creates a new <see cref="ViewModel"/> instance.
@@ -25,8 +25,21 @@ namespace PresentationBase
 		}
 
 		/// <summary>
+		/// Implementation of <see cref="INotifyPropertyChanging.PropertyChanging"/>.
+		/// Is used to notify that a property is about to be changed.
+		/// <br/>
+		/// It is raised before changing the property backing field and <see cref="PropertyChanged"/>.
+		/// </summary>
+		/// <remarks>
+		/// Please note that this does not imply that a property change can be canceled.
+		/// </remarks>
+		public event PropertyChangingEventHandler? PropertyChanging;
+
+		/// <summary>
 		/// Implementation of <see cref="INotifyPropertyChanged.PropertyChanged"/>.
 		/// Is used to support bindings between views and view model properties.
+		/// <br/>
+		/// It is raised after <see cref="PropertyChanging"/> and changing the property backing field.
 		/// </summary>
 		public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -36,14 +49,29 @@ namespace PresentationBase
 		/// </summary>
 		public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
-		/// <summary>
-		/// Raises the <see cref="PropertyChanged"/> event for all properties.
-		/// </summary>
-		protected void RaiseAllPropertiesChanged()
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event for all properties.
+        /// </summary>
+        protected void RaiseAllPropertiesChanged()
 		{
 			// setting PropertyChangedEventArgs.PropertyName to null or string.Empty indicates that all properties changed
 			// see: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged?redirectedfrom=MSDN&view=netframework-4.8#remarks
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
+		}
+
+		/// <summary>
+		/// Raises the <see cref="PropertyChanging"/> event for the given property name.
+		/// </summary>
+		/// <param name="propertyName">The name of the property which is about to be changed. When omitted the property name will be the member name of the caller (which it is when called from the view model property setter).</param>
+		private void RaisePropertyChanging(string propertyName)
+		{
+			if (propertyName == null)
+				throw new ArgumentNullException(nameof(propertyName));
+
+			if (propertyName == string.Empty)
+				throw new ArgumentException($"The {nameof(propertyName)} cannot be empty.", nameof(propertyName));
+
+			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
 		}
 
 		/// <summary>
@@ -86,6 +114,9 @@ namespace PresentationBase
 			// if the value was a view model then make sure to update its ParentViewModel
 			if (propertyName != nameof(ParentViewModel) && typeof(ViewModel).IsAssignableFrom(typeof(T)) && newValue == null)
 				(propertyField as ViewModel)!.ParentViewModel = null;
+
+			// notify that the backing field is about to be changed
+			RaisePropertyChanging(propertyName!);
 
 			// otherwise set the new value for the property
 			propertyField = newValue;
