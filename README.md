@@ -15,7 +15,7 @@ The following platform specific extensions exist:
 - [<img src="https://raw.githubusercontent.com/sungaila/PresentationBase/master/Icon.png" align="center" width="24" height="24" alt="PresentationBase Logo"> PresentationBase (WPF)](https://github.com/sungaila/PresentationBase)
 
 ## Examples
-Take a look at the [Quick Start in the wiki](https://github.com/sungaila/PresentationBase.Core/wiki). Here are some basic examples for using PresentationBase.Core:
+Take a look at the [Quick start in the wiki](https://github.com/sungaila/PresentationBase.Core/wiki). Here are some basic examples for using PresentationBase.Core:
 
 ### ViewModels with bindable properties
 ```csharp
