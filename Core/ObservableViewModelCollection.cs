@@ -29,7 +29,7 @@ namespace PresentationBase
             CollectionChanged += ObservableViewModelCollection_CollectionChanged;
         }
 
-        private void ObservableViewModelCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void ObservableViewModelCollection_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {
@@ -68,17 +68,17 @@ namespace PresentationBase
             if (action == null || propertyNames == null)
                 return;
 
-            void propertyChangedHandler(object sender, PropertyChangedEventArgs e)
+            void propertyChangedHandler(object? sender, PropertyChangedEventArgs e)
             {
                 OwnerViewModel.IsDirty = true;
 
-                if (!propertyNames.Contains(e.PropertyName))
+                if (e?.PropertyName == null || !propertyNames.Contains(e.PropertyName))
                     return;
 
                 action.Invoke(e.PropertyName);
             }
 
-            void collectionChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
+            void collectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
             {
                 if (e.OldItems != null)
                 {

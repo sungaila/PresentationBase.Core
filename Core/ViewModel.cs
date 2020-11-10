@@ -266,14 +266,14 @@ namespace PresentationBase
 		/// Returns all errors for a given <paramref name="propertyName"/> or for the entire view model.
 		/// </summary>
 		/// <param name="propertyName">The property name. Set to <see langword="null"/> to get all view model errors.</param>
-		public IEnumerable? GetErrors(string propertyName)
+		public IEnumerable GetErrors(string? propertyName)
 		{
 			if (propertyName == null)
 				propertyName = string.Empty;
 
 			return _errors.ContainsKey(propertyName)
 				? _errors[propertyName]
-				: null;
+				: new List<string>();
 		}
 
 		/// <summary>

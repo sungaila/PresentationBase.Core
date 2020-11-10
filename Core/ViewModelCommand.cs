@@ -42,7 +42,7 @@ namespace PresentationBase
 		}
 
 		#region Explicit interface implementations
-		bool ICommand.CanExecute(object parameter)
+		bool ICommand.CanExecute(object? parameter)
 		{
 			if (!(parameter is TViewModel viewModel))
 				return true;
@@ -50,7 +50,7 @@ namespace PresentationBase
 			return CanExecute(viewModel);
 		}
 
-		void ICommand.Execute(object parameter)
+		void ICommand.Execute(object? parameter)
 		{
 			if (!(parameter is TViewModel viewModel))
 				return;

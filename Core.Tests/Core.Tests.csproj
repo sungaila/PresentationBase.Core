@@ -12,7 +12,9 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <Features>strict</Features>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>nullable;NU1605</WarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <!-- Project references -->

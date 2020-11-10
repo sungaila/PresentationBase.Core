@@ -68,7 +68,7 @@ namespace PresentationBase.Tests
             }
         }
 
-        void AssertDispatcherExecution()
+        static void AssertDispatcherExecution()
         {
             Assert.IsTrue(TestDispatcherExecuted, $"{nameof(TestDispatcher)} has not been executed.");
             TestDispatcherExecuted = false;

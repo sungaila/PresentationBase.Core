@@ -111,7 +111,7 @@ namespace PresentationBase
             AcceptChanges();
         }
 
-        private static readonly MethodInfo _acceptChangesInfo = typeof(TrxViewModel).GetMethod(nameof(AcceptChanges), BindingFlags.Instance | BindingFlags.Public);
+        private static readonly MethodInfo _acceptChangesInfo = typeof(TrxViewModel).GetMethod(nameof(AcceptChanges), BindingFlags.Instance | BindingFlags.Public)!;
 
         /// <inheritdoc/>
         public virtual void AcceptChanges()
@@ -152,7 +152,7 @@ namespace PresentationBase
         /// </summary>
         protected bool IsRejectingChanges { get; private set; }
 
-        private static readonly MethodInfo _rejectChangesInfo = typeof(TrxViewModel).GetMethod(nameof(RejectChanges), BindingFlags.Instance | BindingFlags.Public);
+        private static readonly MethodInfo _rejectChangesInfo = typeof(TrxViewModel).GetMethod(nameof(RejectChanges), BindingFlags.Instance | BindingFlags.Public)!;
 
         /// <inheritdoc/>
         public virtual void RejectChanges()

@@ -31,7 +31,7 @@ namespace PresentationBase.DtoConverters
             return ToViewModel<TViewModel>(dto, new List<object>());
         }
 
-        private static readonly MethodInfo _internalToViewModelInfo = typeof(DtoConverterExtensions).GetMethod(nameof(ToViewModel), BindingFlags.Static | BindingFlags.NonPublic);
+        private static readonly MethodInfo _internalToViewModelInfo = typeof(DtoConverterExtensions).GetMethod(nameof(ToViewModel), BindingFlags.Static | BindingFlags.NonPublic)!;
 
         private static TViewModel ToViewModel<TViewModel>(object dto, List<object> visitedDtos)
             where TViewModel : ViewModel
@@ -84,7 +84,7 @@ namespace PresentationBase.DtoConverters
                     if (valueToConvert == null)
                         continue;
 
-                    var collection = Activator.CreateInstance(propertyInfo.PropertyType, new[] { result });
+                    var collection = Activator.CreateInstance(propertyInfo.PropertyType, new[] { result })!;
 
                     MethodInfo genericToViewModel = _internalToViewModelInfo.MakeGenericMethod(propertyInfo.PropertyType.GenericTypeArguments.First());
 
@@ -126,7 +126,7 @@ namespace PresentationBase.DtoConverters
             return ToDto<TDto>(viewModel, new List<ViewModel>());
         }
 
-        private static readonly MethodInfo _internalToDtoInfo = typeof(DtoConverterExtensions).GetMethod(nameof(ToDto), BindingFlags.Static | BindingFlags.NonPublic);
+        private static readonly MethodInfo _internalToDtoInfo = typeof(DtoConverterExtensions).GetMethod(nameof(ToDto), BindingFlags.Static | BindingFlags.NonPublic)!;
 
         private static TDto ToDto<TDto>(ViewModel viewModel, List<ViewModel> visitedViewModels)
             where TDto : class
@@ -179,7 +179,7 @@ namespace PresentationBase.DtoConverters
                     if (valueToConvert == null)
                         continue;
 
-                    var collection = Activator.CreateInstance(dtoPropertyInfo.PropertyType);
+                    var collection = Activator.CreateInstance(dtoPropertyInfo.PropertyType)!;
 
                     MethodInfo genericToDto = _internalToDtoInfo.MakeGenericMethod(dtoPropertyInfo.PropertyType.GenericTypeArguments.First());
 

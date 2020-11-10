@@ -36,7 +36,7 @@ namespace PresentationBase
 					.ContinueWith(task =>
 					{
 						if (task.IsFaulted)
-							HandleUncaughtException(parameter, task.Exception);
+							HandleUncaughtException(parameter, task.Exception!);
 
 						IsWorking = false;
 					});

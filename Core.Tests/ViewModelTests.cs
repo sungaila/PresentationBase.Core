@@ -27,8 +27,10 @@ namespace PresentationBase.Tests
             Assert.IsFalse(viewModel.HasErrors);
             Assert.IsTrue(viewModel.IsValid);
             Assert.IsFalse(viewModel.HasErrors);
-            Assert.IsNull(viewModel.GetErrors(string.Empty));
-            Assert.IsNull(viewModel.GetErrors("NotExisting"));
+            Assert.IsNotNull(viewModel.GetErrors(string.Empty));
+            Assert.AreEqual(0, viewModel.GetErrors(string.Empty).Cast<string>().Count());
+            Assert.IsNotNull(viewModel.GetErrors("NotExisting"));
+            Assert.AreEqual(0, viewModel.GetErrors("NotExisting").Cast<string>().Count());
 
             Assert.IsNotNull(viewModel.Commands);
             Assert.AreEqual(0, viewModel.Commands.Count);
@@ -67,7 +69,8 @@ namespace PresentationBase.Tests
             Assert.IsTrue(viewModel.IsValid);
             Assert.IsFalse(viewModel.HasErrors);
             errors = viewModel.GetErrors(nameof(TestViewModel.Name)) as IEnumerable<string>;
-            Assert.IsNull(errors);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Cast<string>().Count());
 
             // validation must fail
             viewModel.Name = string.Empty;

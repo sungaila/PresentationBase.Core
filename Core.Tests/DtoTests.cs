@@ -9,7 +9,7 @@ namespace PresentationBase.Tests
     public class DtoTests
     {
         [TestMethod]
-        [Obsolete]
+        [Obsolete("GetDtoAttribute is deprecated and replaced by GetDtoAttributes.")]
         public void GetDtoAttribute()
         {
             var dtoAttr = DtoAttribute.GetDtoAttribute(typeof(DummyViewModel));

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly -->
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0;net50</TargetFrameworks>
     <AssemblyName>PresentationBase.Core</AssemblyName>
     <RootNamespace>PresentationBase</RootNamespace>
     <EmbedAllSources>true</EmbedAllSources>
@@ -11,17 +11,16 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <VersionPrefix>3.3.0</VersionPrefix>
+    <VersionPrefix>3.4.0</VersionPrefix>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>Icon_128.png</PackageIcon>
     <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
-    <Description>A lightweight MVVM implementation targeting both .NET Framework 4.5 and .NET Standard 2.0.</Description>
-    <PackageReleaseNotes>- Added TrxViewModel for short-term and long-term rollbacks
-- ViewModel implements INotifyPropertyChanging now</PackageReleaseNotes>
-    <PackageTags>MVVM ViewModel Converter IValueConverter Command INotifyPropertyChanged INotifyPropertyChanging INotifyDataErrorInfo IEditableObject IRevertibleChangeTracking ICommand DTO C#</PackageTags>
+    <Description>A lightweight MVVM implementation targeting .NET Framework 4.5, .NET Standard 2.0 and .NET 5.0.</Description>
+    <PackageReleaseNotes>Added .NET 5.0 as a target framework.</PackageReleaseNotes>
+    <PackageTags>MVVM ViewModel Command INotifyPropertyChanged INotifyPropertyChanging INotifyDataErrorInfo IEditableObject IRevertibleChangeTracking ICommand DTO C#</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
@@ -33,7 +32,9 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <Features>strict</Features>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors>nullable;NU1605</WarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <!-- Debug builds -->

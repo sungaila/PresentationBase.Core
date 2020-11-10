@@ -35,7 +35,7 @@ namespace PresentationBase
                         continue;
                     }
 
-                    var newCollection = Activator.CreateInstance(property.PropertyType, new[] { _contextViewModel });
+                    var newCollection = Activator.CreateInstance(property.PropertyType, new[] { _contextViewModel })!;
 
                     foreach (var item in existingCollection)
                     {
