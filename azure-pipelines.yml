@@ -13,6 +13,11 @@ jobs:
 - job: Build
   displayName: 'Build'
   steps:
+  - task: UseDotNet@2
+    displayName: 'Install .NET 5 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '5.x'
   - task: DotNetCoreCLI@2
     displayName: 'Build solution'
     inputs:
@@ -52,6 +57,11 @@ jobs:
   steps:
   - checkout: none
     displayName: 'Skip checkout'
+  - task: UseDotNet@2
+    displayName: 'Install .NET 5 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '5.x'
   - task: DownloadPipelineArtifact@2
     displayName: 'Download test assemblies'
     inputs:
