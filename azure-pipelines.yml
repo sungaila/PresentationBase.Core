@@ -63,6 +63,11 @@ jobs:
       buildType: 'current'
       artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
+  - task: UseDotNet@2
+    displayName: 'Install .NET 5 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '5.x'
   - task: VisualStudioTestPlatformInstaller@1
     displayName: 'Install latest test platform'
     inputs:
