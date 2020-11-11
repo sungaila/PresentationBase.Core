@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA209F08-E6AA-4928-A9DD-1DCAFB4DF1CB}"
 	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
 		Icon.png = Icon.png
 		Icon_128.png = Icon_128.png
 		README.md = README.md
@@ -12,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{878D5FA8-D09A-45F3-9355-661B130101BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Core.Tests\Core.Tests.csproj", "{1F78CCBC-1E91-47DD-BEFC-46B01A308548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "Core.Tests\Core.Tests.csproj", "{1F78CCBC-1E91-47DD-BEFC-46B01A308548}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

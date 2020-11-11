@@ -7,7 +7,7 @@
 [![NuGet downloads](https://img.shields.io/nuget/dt/PresentationBase.Core.svg?style=flat-square)](https://www.nuget.org/packages/PresentationBase.Core/)
 [![GitHub license](https://img.shields.io/github/license/sungaila/PresentationBase.Core?style=flat-square)](https://github.com/sungaila/PresentationBase.Core/blob/master/LICENSE)
 
-A lightweight MVVM implementation targeting, **.NET Framework 4.5**, **.NET Standard 2.0** and **.NET 5.0**.
+A lightweight MVVM implementation targeting **.NET Framework 4.5**, **.NET Standard 2.0** and **.NET 5.0**.
 
 It contains base implementations for *view models*, *commands*, *data transfer object* conversion and more.
 

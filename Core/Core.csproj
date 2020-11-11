@@ -12,6 +12,7 @@
   <!-- NuGet -->
   <PropertyGroup>
     <VersionPrefix>3.4.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -64,7 +64,7 @@ jobs:
       artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VisualStudioTestPlatformInstaller@1
-    displayName: 'Install latest Visual Studio Test Platform'
+    displayName: 'Install latest test platform'
     inputs:
       packageFeedSelector: 'nugetOrg'
       versionSelector: 'latestStable'

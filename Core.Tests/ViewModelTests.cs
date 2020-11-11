@@ -61,7 +61,8 @@ namespace PresentationBase.Tests
             Assert.IsFalse(viewModel.IsValid);
             Assert.IsTrue(viewModel.HasErrors);
             var errors = viewModel.GetErrors(nameof(TestViewModel.Name)) as IEnumerable<string>;
-            Assert.AreEqual("Name cannot be stupid!", errors.Single());
+            Assert.IsNotNull(errors);
+            Assert.AreEqual("Name cannot be stupid!", errors!.Single());
             Assert.IsTrue(viewModel.IsDirty);
 
             // validation must succeed
@@ -70,14 +71,15 @@ namespace PresentationBase.Tests
             Assert.IsFalse(viewModel.HasErrors);
             errors = viewModel.GetErrors(nameof(TestViewModel.Name)) as IEnumerable<string>;
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Cast<string>().Count());
+            Assert.AreEqual(0, errors!.Count());
 
             // validation must fail
             viewModel.Name = string.Empty;
             Assert.IsFalse(viewModel.IsValid);
             Assert.IsTrue(viewModel.HasErrors);
             errors = viewModel.GetErrors(nameof(TestViewModel.Name)) as IEnumerable<string>;
-            Assert.AreEqual("Name cannot be null or empty!", errors.Single());
+            Assert.IsNotNull(errors);
+            Assert.AreEqual("Name cannot be null or empty!", errors!.Single());
 
             bool propertyChangingRaised = false;
             bool propertyChangedRaised = false;
