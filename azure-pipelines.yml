@@ -68,18 +68,12 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '5.x'
-  - task: VisualStudioTestPlatformInstaller@1
-    displayName: 'Install latest test platform'
-    inputs:
-      packageFeedSelector: 'nugetOrg'
-      versionSelector: 'latestStable'
   - task: VSTest@2
     displayName: 'Run tests'
     inputs:
       testSelector: 'testAssemblies'
       testAssemblyVer2: '$(Pipeline.Workspace)\**\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
-      vsTestVersion: 'toolsInstaller'
       runTestsInIsolation: true
       codeCoverageEnabled: true
       platform: '$(buildPlatform)'
