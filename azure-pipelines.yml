@@ -72,7 +72,7 @@ jobs:
     displayName: 'Run tests'
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\**\PresentationBase.Core.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\bin\**\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
