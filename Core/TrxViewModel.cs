@@ -11,18 +11,10 @@ using System.Threading.Tasks;
 namespace PresentationBase
 {
     /// <summary>
-    /// Extends the base <see cref="ViewModel"/> implementation with the ability to rollback property changes.
-    /// <br/><br/>
-    /// <strong>Short-term</strong> transactions are managed with <see cref="BeginEdit"/>, <see cref="EndEdit"/> and <see cref="CancelEdit"/>.
-    /// <br/>
-    /// <strong>Long-term</strong> transactions use <see cref="AcceptChanges"/> and <see cref="RejectChanges"/>.
+    /// The base implementation of <see cref="ITrxViewModel"/>.
     /// </summary>
-    /// <remarks>
-    /// Please note that <see langword="public"/> properties (found by <see cref="TypeDescriptor"/>) can be rolled back only.
-    /// </remarks>
     public abstract class TrxViewModel
-
-        : ViewModel, IEditableObject, IRevertibleChangeTracking
+        : ViewModel, ITrxViewModel
     {
         /// <summary>
         /// Creates a new <see cref="TrxViewModel"/> instance.
@@ -49,10 +41,7 @@ namespace PresentationBase
 
         private bool _isEditing;
 
-        /// <summary>
-        /// Indicates that <see cref="BeginEdit"/> has been called and a transaction is ongoing.
-        /// Remains <see langword="true"/> until <see cref="EndEdit"/> or <see cref="CancelEdit"/> are called.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsEditing
         {
             get => _isEditing;
@@ -63,7 +52,7 @@ namespace PresentationBase
 
         /// <inheritdoc/>
         /// <remarks>
-        /// Please note that <see cref="IsChanged"/> is set to <see langword="true"/> whenever <see cref="ViewModel.PropertyChanged"/> is raised.
+        /// Please note that <see cref="IsChanged"/> is set to <see langword="true"/> whenever <see cref="Bindable.PropertyChanged"/> is raised.
         /// <see cref="ViewModel.IsDirty"/> is a similar but independent property.
         /// </remarks>
         public bool IsChanged
