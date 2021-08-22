@@ -3,6 +3,7 @@
 # PresentationBase.Core
 [![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/sungaila/2dc19da0-58ad-4e78-b091-a473a1ad54a8/1/master?style=flat-square)](https://dev.azure.com/sungaila/PresentationBase.Core/_build/latest?definitionId=1&branchName=master)
 [![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/sungaila/PresentationBase.Core/1/master?style=flat-square)](https://dev.azure.com/sungaila/PresentationBase.Core/_build/latest?definitionId=1&branchName=master)
+[![SonarCloud Quality Gate](https://img.shields.io/sonar/quality_gate/sungaila_PresentationBase.Core?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=sungaila_PresentationBase.Core)
 [![NuGet version](https://img.shields.io/nuget/v/PresentationBase.Core.svg?style=flat-square)](https://www.nuget.org/packages/PresentationBase.Core/)
 [![NuGet downloads](https://img.shields.io/nuget/dt/PresentationBase.Core.svg?style=flat-square)](https://www.nuget.org/packages/PresentationBase.Core/)
 [![GitHub license](https://img.shields.io/github/license/sungaila/PresentationBase.Core?style=flat-square)](https://github.com/sungaila/PresentationBase.Core/blob/master/LICENSE)

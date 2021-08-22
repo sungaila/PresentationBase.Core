@@ -6,18 +6,12 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
-
 jobs:
 - job: Build
   displayName: 'Build'
+  pool:
+    vmImage: 'windows-latest'
   steps:
-  - task: UseDotNet@2
-    displayName: 'Install .NET 5 SDK'
-    inputs:
-      packageType: 'sdk'
-      version: '5.x'
   - task: DotNetCoreCLI@2
     displayName: 'Build solution'
     inputs:
@@ -54,6 +48,16 @@ jobs:
 - job: Test
   displayName: 'Test'
   dependsOn: Build
+  strategy:
+    matrix:
+      Windows:
+        imageName: 'windows-latest'
+      Linux:
+        imageName: 'ubuntu-latest'
+      macOS:
+        imageName: 'macOS-latest'
+  pool:
+    vmImage: $(imageName)
   steps:
   - checkout: none
     displayName: 'Skip checkout'
@@ -63,11 +67,6 @@ jobs:
       buildType: 'current'
       artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
-  - task: UseDotNet@2
-    displayName: 'Install .NET 5 SDK'
-    inputs:
-      packageType: 'sdk'
-      version: '5.x'
   - task: VSTest@2
     displayName: 'Run tests'
     inputs:
