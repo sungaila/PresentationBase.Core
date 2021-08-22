@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace PresentationBase.Tests
 {
@@ -349,7 +346,7 @@ namespace PresentationBase.Tests
             turel.Name = "Turel Sarafan";
             Assert.IsTrue(turel.IsChanged);
             Assert.IsTrue(turel.IsDirty);
-            
+
             kain.RejectChanges();
             Assert.IsNull(kain.Name);
             Assert.IsNull(kain.Children);

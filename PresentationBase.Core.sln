@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Icon.png = Icon.png
 		Icon_128.png = Icon_128.png
 		README.md = README.md
+		.github\workflows\SonarCloud.yml = .github\workflows\SonarCloud.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{878D5FA8-D09A-45F3-9355-661B130101BD}"

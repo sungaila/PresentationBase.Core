@@ -20,10 +20,12 @@
     <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
     <Description>A lightweight MVVM implementation targeting .NET Framework 4.5, .NET Standard 2.0 and .NET 5.0.</Description>
-    <PackageReleaseNotes>- Extracted class Bindable from ViewModel for simpler use cases
-- Extracted interfaces for Bindable, ViewModel and TrxViewModel
-- Added .NET 5.0 as a target framework
-- .NET 5.0: Commands are being searched via ModuleInitializerAttribute</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      - Extracted class Bindable from ViewModel for simpler use cases
+      - Extracted interfaces for Bindable, ViewModel and TrxViewModel
+      - Added .NET 5.0 as a target framework
+      - .NET 5.0: Commands are being searched via ModuleInitializerAttribute
+    </PackageReleaseNotes>
     <PackageTags>MVVM ViewModel Command INotifyPropertyChanged INotifyPropertyChanging INotifyDataErrorInfo IEditableObject IRevertibleChangeTracking ICommand DTO C#</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -42,14 +44,16 @@
   </PropertyGroup>
 
   <!-- Debug builds -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <VersionSuffix>debug</VersionSuffix>
   </PropertyGroup>
 
   <!-- Release builds -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <SignAssembly>true</SignAssembly>
     <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <!-- NuGet Icon -->

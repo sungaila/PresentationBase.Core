@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PresentationBase
 {
@@ -108,7 +103,7 @@ namespace PresentationBase
             _currentSnapshot = new ViewModelSnapshot(this);
 
             // apply changes from top-down
-            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(this))    
+            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(this))
             {
                 if (typeof(TrxViewModel).IsAssignableFrom(property.PropertyType))
                 {

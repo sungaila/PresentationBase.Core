@@ -2,9 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PresentationBase
 {
@@ -48,13 +45,13 @@ namespace PresentationBase
                 }
 
                 _properties.Add(property, property.GetValue(_contextViewModel));
-            }                
+            }
         }
 
         public void ApplySnapshot()
         {
             foreach (var property in _properties)
-            {   
+            {
                 property.Key.SetValue(_contextViewModel, property.Value);
 
                 if (HelperExtensions.IsTypeObservableViewModelCollection(property.Key.PropertyType))

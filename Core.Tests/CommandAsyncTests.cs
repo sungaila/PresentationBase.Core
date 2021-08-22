@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PresentationBase.DtoConverters;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace PresentationBase.Tests
