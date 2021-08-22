@@ -98,7 +98,7 @@ namespace PresentationBase.Tests
                 Assert.AreEqual(expectedOldItems.Count(), args.OldItems!.Count);
                 foreach (var item in expectedOldItems)
                 {
-                    Assert.AreEqual(args.OldItems.Cast<TViewModel>().Count(i => i == item), 1);
+                    Assert.AreEqual(1, args.OldItems.Cast<TViewModel>().Count(i => i == item));
                 }
             }
 
@@ -112,7 +112,7 @@ namespace PresentationBase.Tests
                 Assert.AreEqual(expectedNewItems.Count(), args.NewItems!.Count);
                 foreach (var item in expectedNewItems)
                 {
-                    Assert.AreEqual(args.NewItems.Cast<TViewModel>().Count(i => i == item), 1);
+                    Assert.AreEqual(1, args.NewItems.Cast<TViewModel>().Count(i => i == item));
                 }
             }
 

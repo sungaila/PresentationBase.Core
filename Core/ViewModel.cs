@@ -16,7 +16,7 @@ namespace PresentationBase
         /// <summary>
         /// Creates a new <see cref="ViewModel"/> instance.
         /// </summary>
-        public ViewModel()
+        protected ViewModel()
         {
             // add all matching commands found with reflection
             AddCommands(KnownCommands.Where(cmd => cmd.GetType().HasGenericTypeArgument(GetType())).ToArray());

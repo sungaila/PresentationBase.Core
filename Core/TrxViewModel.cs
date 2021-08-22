@@ -16,7 +16,7 @@ namespace PresentationBase
         /// Ensures that a snapshot is available for rollbacks.
         /// </summary>
 #pragma warning disable CS8618 // the non-nullable field _currentSnapshot will be initialized in AcceptChanges
-        public TrxViewModel()
+        protected TrxViewModel()
 #pragma warning restore CS8618
         {
             AcceptChanges();

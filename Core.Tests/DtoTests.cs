@@ -26,7 +26,7 @@ namespace PresentationBase.Tests
 
             var dtoPropAttr = DtoPropertyAttribute.GetDtoPropertyAttribute(typeof(Dummy3ViewModel).GetProperty(nameof(Dummy3ViewModel.NonExistent))!);
             Assert.IsNotNull(dtoPropAttr);
-            Assert.AreEqual(dtoPropAttr!.PropertyName, "NotExistingProperty");
+            Assert.AreEqual("NotExistingProperty", dtoPropAttr!.PropertyName);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace PresentationBase.Tests
             Assert.IsNotNull(dtoPropAttrs);
             Assert.IsTrue(dtoAttrs.Any());
             Assert.IsTrue(dtoAttrs.Count() == 1);
-            Assert.AreEqual(dtoPropAttrs.Single().PropertyName, "NotExistingProperty");
+            Assert.AreEqual("NotExistingProperty", dtoPropAttrs.Single().PropertyName);
         }
 
         [TestMethod]
