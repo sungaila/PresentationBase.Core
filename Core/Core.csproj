@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly -->
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
     <AssemblyName>PresentationBase.Core</AssemblyName>
     <RootNamespace>PresentationBase</RootNamespace>
     <EmbedAllSources>true</EmbedAllSources>

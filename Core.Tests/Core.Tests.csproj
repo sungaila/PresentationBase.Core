@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly -->
   <PropertyGroup>
-    <TargetFrameworks>net6.0;netcoreapp3.1;net461</TargetFrameworks>
+    <TargetFrameworks>net5.0;netcoreapp3.1;net461</TargetFrameworks>
     <AssemblyName>PresentationBase.Core.Tests</AssemblyName>
     <RootNamespace>PresentationBase.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
