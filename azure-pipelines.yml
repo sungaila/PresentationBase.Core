@@ -68,15 +68,15 @@ jobs:
       artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
-    displayName: '.NET Framework 4.5'
+    displayName: '.NET Framework 4.6.1'
     condition: eq(variables['agent.os'], 'Windows_NT')
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\**\net45\PresentationBase.Core.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\net461\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
-      testRunTitle: '.NET Framework 4.5 ($(agent.os))'
+      testRunTitle: '.NET Framework 4.6.1 ($(agent.os))'
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
   - task: DotNetCoreCLI@2
@@ -87,9 +87,9 @@ jobs:
       arguments: '$(Pipeline.Workspace)\**\netcoreapp3.1\PresentationBase.Core.Tests.dll'
       testRunTitle: '.NET Core 3.1 ($(agent.os))'
   - task: DotNetCoreCLI@2
-    displayName: '.NET 5.0'
+    displayName: '.NET 6.0'
     condition: succeededOrFailed()
     inputs:
       command: 'test'
-      arguments: '$(Pipeline.Workspace)\**\net50\PresentationBase.Core.Tests.dll'
-      testRunTitle: '.NET 5.0 ($(agent.os))'
+      arguments: '$(Pipeline.Workspace)\**\net6.0\PresentationBase.Core.Tests.dll'
+      testRunTitle: '.NET 6.0 ($(agent.os))'

@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly -->
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0;net50</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <AssemblyName>PresentationBase.Core</AssemblyName>
     <RootNamespace>PresentationBase</RootNamespace>
     <EmbedAllSources>true</EmbedAllSources>
-    <AssemblyOriginatorKeyFile>PresentationBase.Core.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>PresentationBase.Core.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Configurations>Debug;Release;ReleaseSigned</Configurations>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
-    <VersionPrefix>3.4.0</VersionPrefix>
+    <VersionPrefix>3.5.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -20,12 +21,7 @@
     <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
     <Description>A lightweight MVVM implementation targeting .NET Framework 4.5, .NET Standard 2.0 and .NET 5.0.</Description>
-    <PackageReleaseNotes>
-      - Extracted class Bindable from ViewModel for simpler use cases
-      - Extracted interfaces for Bindable, ViewModel and TrxViewModel
-      - Added .NET 5.0 as a target framework
-      - .NET 5.0: Commands are being searched via ModuleInitializerAttribute
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Assemblies and NuGet package digitally signed.</PackageReleaseNotes>
     <PackageTags>MVVM ViewModel Command INotifyPropertyChanged INotifyPropertyChanging INotifyDataErrorInfo IEditableObject IRevertibleChangeTracking ICommand DTO C#</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -38,7 +34,7 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <Features>strict</Features>
-    <WarningsAsErrors>nullable;NU1605</WarningsAsErrors>
+    <WarningsAsErrors>nullable;NU1605;RS0017;RS0024;RS0025;RS0026;RS0036;RS0037;RS0041;RS0048;RS0050</WarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
@@ -49,26 +45,38 @@
   </PropertyGroup>
 
   <!-- Release builds -->
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='ReleaseSigned'">
     <SignAssembly>true</SignAssembly>
     <Optimize>true</Optimize>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
+  <!-- Roslyn analyzer for public APIs -->
+  <ItemGroup>
+    <AdditionalFiles Include="PublicAPI/$(TargetFramework)/PublicAPI.Shipped.txt" />
+    <AdditionalFiles Include="PublicAPI/$(TargetFramework)/PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+
   <!-- NuGet Icon -->
   <ItemGroup>
-    <None Include="..\Icon_128.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\Icon_128.png" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <!-- SourceLink build steps -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <Import Project="PresentationBase.Core.PropertiesSigning.targets" />
+  <Import Project="PresentationBase.Core.CodeSigning.targets" />
+  <Import Project="PresentationBase.Core.PackageSigning.targets" />
 </Project>

@@ -1,0 +1,113 @@
+﻿#nullable enable
+abstract PresentationBase.Dispatcher.DispatchImpl(System.Action! action) -> void
+abstract PresentationBase.ViewModelCommand<TViewModel>.Execute(TViewModel! parameter) -> void
+abstract PresentationBase.ViewModelCommandAsync<TViewModel>.ExecutionAsync(TViewModel! parameter) -> System.Threading.Tasks.Task!
+override PresentationBase.ViewModel.PostSetProperty<T>(ref T propertyField, T newValue, System.Func<T, System.Collections.Generic.IEnumerable<string!>!>? propertyValidation = null, string? propertyName = null) -> void
+override PresentationBase.ViewModel.PreSetProperty<T>(ref T propertyField, T newValue, System.Func<T, System.Collections.Generic.IEnumerable<string!>!>? propertyValidation = null, string? propertyName = null) -> void
+override PresentationBase.ViewModelCommandAsync<TViewModel>.CanExecute(TViewModel! parameter) -> bool
+override sealed PresentationBase.ViewModelCommandAsync<TViewModel>.Execute(TViewModel! parameter) -> void
+PresentationBase.Bindable
+PresentationBase.Bindable.AddBindableErrors(System.Collections.Generic.IEnumerable<string!>? errorMessages, bool clearPreviousErrors = true) -> void
+PresentationBase.Bindable.AddPropertyErrors(string! propertyName, System.Collections.Generic.IEnumerable<string!>? errorMessages, bool clearPreviousErrors = true) -> void
+PresentationBase.Bindable.Bindable() -> void
+PresentationBase.Bindable.ClearAllErrors() -> void
+PresentationBase.Bindable.ClearBindableErrors() -> void
+PresentationBase.Bindable.ClearPropertyErrors(string! propertyName) -> void
+PresentationBase.Bindable.ErrorsChanged -> System.EventHandler<System.ComponentModel.DataErrorsChangedEventArgs!>?
+PresentationBase.Bindable.GetErrors(string? propertyName) -> System.Collections.IEnumerable!
+PresentationBase.Bindable.IsValid.get -> bool
+PresentationBase.Bindable.PropertyChanged -> System.ComponentModel.PropertyChangedEventHandler?
+PresentationBase.Bindable.PropertyChanging -> System.ComponentModel.PropertyChangingEventHandler?
+PresentationBase.Bindable.RaiseAllPropertiesChanged() -> void
+PresentationBase.Bindable.RaiseBindableErrorsChanged() -> void
+PresentationBase.Bindable.RaisePropertyChanged(string? propertyName = null) -> void
+PresentationBase.Bindable.RaisePropertyChanging(string! propertyName) -> void
+PresentationBase.Bindable.RaisePropertyErrorsChanged(string! propertyName) -> void
+PresentationBase.Bindable.SetProperty<T>(ref T propertyField, T newValue, System.Func<T, System.Collections.Generic.IEnumerable<string!>!>? propertyValidation = null, string? propertyName = null) -> bool
+PresentationBase.Dispatcher
+PresentationBase.Dispatcher.Dispatcher() -> void
+PresentationBase.DtoConverters.DtoAttribute
+PresentationBase.DtoConverters.DtoAttribute.DtoAttribute(System.Type! type) -> void
+PresentationBase.DtoConverters.DtoAttribute.Type.get -> System.Type!
+PresentationBase.DtoConverters.DtoConverterExtensions
+PresentationBase.DtoConverters.DtoPropertyAttribute
+PresentationBase.DtoConverters.DtoPropertyAttribute.DtoPropertyAttribute(string? propertyName = null, System.Type? type = null) -> void
+PresentationBase.DtoConverters.DtoPropertyAttribute.PropertyName.get -> string!
+PresentationBase.DtoConverters.DtoPropertyAttribute.Type.get -> System.Type?
+PresentationBase.IBindable
+PresentationBase.IBindable.IsValid.get -> bool
+PresentationBase.ITrxViewModel
+PresentationBase.ITrxViewModel.IsEditing.get -> bool
+PresentationBase.IViewModel
+PresentationBase.IViewModel.Commands.get -> System.Collections.Generic.Dictionary<System.Type!, PresentationBase.IViewModelCommand!>!
+PresentationBase.IViewModel.IsDirty.get -> bool
+PresentationBase.IViewModel.IsDirty.set -> void
+PresentationBase.IViewModel.IsRefreshing.get -> bool
+PresentationBase.IViewModel.IsRefreshing.set -> void
+PresentationBase.IViewModel.ParentViewModel.get -> PresentationBase.ViewModel?
+PresentationBase.IViewModel.ParentViewModel.set -> void
+PresentationBase.IViewModel.RootViewModel.get -> PresentationBase.ViewModel?
+PresentationBase.IViewModel.Tag.get -> object?
+PresentationBase.IViewModel.Tag.set -> void
+PresentationBase.IViewModelCommand
+PresentationBase.IViewModelCommand.CanExecute(PresentationBase.ViewModel! parameter) -> bool
+PresentationBase.IViewModelCommand.Execute(PresentationBase.ViewModel! parameter) -> void
+PresentationBase.IViewModelCommand.RaiseCanExecuteChanged() -> void
+PresentationBase.IViewModelCommandAsync
+PresentationBase.IViewModelCommandAsync.ExecuteAsync(PresentationBase.ViewModel! parameter) -> System.Threading.Tasks.Task!
+PresentationBase.IViewModelCommandAsync.IsWorking.get -> bool
+PresentationBase.ObservableViewModelCollection<TViewModel>
+PresentationBase.ObservableViewModelCollection<TViewModel>.Add(TViewModel! item) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.AddRange(System.Collections.Generic.IEnumerable<TViewModel!>! collection) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.Clear() -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.Insert(int index, TViewModel! item) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.ObservableViewModelCollection(PresentationBase.ViewModel! viewModel) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.Observe(System.Action! action, params string![]! propertyNames) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.Observe(System.Action<string!>! action, params string![]! propertyNames) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.Remove(TViewModel! item) -> bool
+PresentationBase.ObservableViewModelCollection<TViewModel>.RemoveAt(int index) -> void
+PresentationBase.ObservableViewModelCollection<TViewModel>.Replace(params TViewModel![]! collection) -> void
+PresentationBase.TrxViewModel
+PresentationBase.TrxViewModel.IsChanged.get -> bool
+PresentationBase.TrxViewModel.IsChanged.set -> void
+PresentationBase.TrxViewModel.IsEditing.get -> bool
+PresentationBase.TrxViewModel.IsEditing.set -> void
+PresentationBase.TrxViewModel.TrxViewModel() -> void
+PresentationBase.ViewModel
+PresentationBase.ViewModel.Commands.get -> System.Collections.Generic.Dictionary<System.Type!, PresentationBase.IViewModelCommand!>!
+PresentationBase.ViewModel.IsDirty.get -> bool
+PresentationBase.ViewModel.IsDirty.set -> void
+PresentationBase.ViewModel.IsRefreshing.get -> bool
+PresentationBase.ViewModel.IsRefreshing.set -> void
+PresentationBase.ViewModel.ParentViewModel.get -> PresentationBase.ViewModel?
+PresentationBase.ViewModel.ParentViewModel.set -> void
+PresentationBase.ViewModel.RootViewModel.get -> PresentationBase.ViewModel?
+PresentationBase.ViewModel.Tag.get -> object?
+PresentationBase.ViewModel.Tag.set -> void
+PresentationBase.ViewModel.ViewModel() -> void
+PresentationBase.ViewModelCommand<TViewModel>
+PresentationBase.ViewModelCommand<TViewModel>.CanExecuteChanged -> System.EventHandler?
+PresentationBase.ViewModelCommand<TViewModel>.RaiseCanExecuteChanged() -> void
+PresentationBase.ViewModelCommand<TViewModel>.ViewModelCommand() -> void
+PresentationBase.ViewModelCommandAsync<TViewModel>
+PresentationBase.ViewModelCommandAsync<TViewModel>.ExecuteAsync(TViewModel! parameter) -> System.Threading.Tasks.Task!
+PresentationBase.ViewModelCommandAsync<TViewModel>.IsWorking.get -> bool
+PresentationBase.ViewModelCommandAsync<TViewModel>.ViewModelCommandAsync() -> void
+static PresentationBase.Dispatcher.Dispatch(System.Action! action) -> void
+static PresentationBase.DtoConverters.DtoAttribute.GetDtoAttributes(System.Type! viewModelType) -> System.Collections.Generic.IEnumerable<PresentationBase.DtoConverters.DtoAttribute!>!
+static PresentationBase.DtoConverters.DtoConverterExtensions.ToDto<TDto>(this PresentationBase.ViewModel! viewModel) -> TDto!
+static PresentationBase.DtoConverters.DtoConverterExtensions.ToViewModel<TViewModel>(this object! dto) -> TViewModel!
+static PresentationBase.DtoConverters.DtoPropertyAttribute.GetDtoPropertyAttributes(System.Reflection.PropertyInfo! viewModelPropertyInfo) -> System.Collections.Generic.IEnumerable<PresentationBase.DtoConverters.DtoPropertyAttribute!>!
+static PresentationBase.ViewModel.ReInitializeCommands() -> void
+virtual PresentationBase.Bindable.HasErrors.get -> bool
+virtual PresentationBase.Bindable.PostSetProperty<T>(ref T propertyField, T newValue, System.Func<T, System.Collections.Generic.IEnumerable<string!>!>? propertyValidation = null, string? propertyName = null) -> void
+virtual PresentationBase.Bindable.PreSetProperty<T>(ref T propertyField, T newValue, System.Func<T, System.Collections.Generic.IEnumerable<string!>!>? propertyValidation = null, string? propertyName = null) -> void
+virtual PresentationBase.TrxViewModel.AcceptChanges() -> void
+virtual PresentationBase.TrxViewModel.BeginEdit() -> void
+virtual PresentationBase.TrxViewModel.CancelEdit() -> void
+virtual PresentationBase.TrxViewModel.EndEdit() -> void
+virtual PresentationBase.TrxViewModel.RejectChanges() -> void
+virtual PresentationBase.ViewModel.IgnoredDirtyProperties.get -> System.Collections.Generic.IEnumerable<string!>!
+virtual PresentationBase.ViewModelCommand<TViewModel>.CanExecute(TViewModel! parameter) -> bool
+virtual PresentationBase.ViewModelCommandAsync<TViewModel>.HandleUncaughtException(TViewModel! parameter, System.Exception! ex) -> void
+PresentationBase.TrxViewModel.IsRejectingChanges.get -> bool

@@ -107,17 +107,14 @@ namespace PresentationBase
             {
                 if (typeof(TrxViewModel).IsAssignableFrom(property.PropertyType))
                 {
-                    var trxViewModel = (TrxViewModel)property.GetValue(this);
-
-                    if (trxViewModel == null)
+                    if (property.GetValue(this) is not TrxViewModel trxViewModel)
                         continue;
 
                     trxViewModel.AcceptChanges();
                 }
                 else if (HelperExtensions.IsTypeObservableViewModelCollection(property.PropertyType))
                 {
-                    var collection = (IEnumerable)property.GetValue(this);
-                    if (collection == null)
+                    if (property.GetValue(this) is not IEnumerable collection)
                         continue;
 
                     foreach (var item in collection)
@@ -153,17 +150,14 @@ namespace PresentationBase
                 {
                     if (typeof(TrxViewModel).IsAssignableFrom(property.PropertyType))
                     {
-                        var trxViewModel = (TrxViewModel)property.GetValue(this);
-
-                        if (trxViewModel == null)
+                        if (property.GetValue(this) is not TrxViewModel trxViewModel)
                             continue;
 
                         trxViewModel.RejectChanges();
                     }
                     else if (HelperExtensions.IsTypeObservableViewModelCollection(property.PropertyType))
                     {
-                        var collection = (IEnumerable)property.GetValue(this);
-                        if (collection == null)
+                        if (property.GetValue(this) is not IEnumerable collection)
                             continue;
 
                         foreach (var item in collection)

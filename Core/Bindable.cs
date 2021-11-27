@@ -146,7 +146,7 @@ namespace PresentationBase
         {
         }
 
-        private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<string>> _errors = new();
 
         /// <summary>
         /// If any property or the bindable itself has failed validation.<para/>

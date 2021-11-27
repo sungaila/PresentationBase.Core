@@ -1,6 +1,5 @@
-<img src="https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon.png" align="left" width="64" height="64" alt="PresentationBase.Core Logo">
+# ![PresentationBase.Core Logo](https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_64.png) PresentationBase.Core
 
-# PresentationBase.Core
 [![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/sungaila/2dc19da0-58ad-4e78-b091-a473a1ad54a8/1/master?style=flat-square)](https://dev.azure.com/sungaila/PresentationBase.Core/_build/latest?definitionId=1&branchName=master)
 [![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/sungaila/PresentationBase.Core/1/master?style=flat-square)](https://dev.azure.com/sungaila/PresentationBase.Core/_build/latest?definitionId=1&branchName=master)
 [![SonarCloud Quality Gate](https://img.shields.io/sonar/quality_gate/sungaila_PresentationBase.Core?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=sungaila_PresentationBase.Core)
@@ -8,12 +7,9 @@
 [![NuGet downloads](https://img.shields.io/nuget/dt/PresentationBase.Core.svg?style=flat-square)](https://www.nuget.org/packages/PresentationBase.Core/)
 [![GitHub license](https://img.shields.io/github/license/sungaila/PresentationBase.Core?style=flat-square)](https://github.com/sungaila/PresentationBase.Core/blob/master/LICENSE)
 
-A lightweight MVVM implementation targeting **.NET Framework 4.5**, **.NET Standard 2.0** and **.NET 5.0**.
+A lightweight MVVM implementation targeting **.NET Standard 2.0** and **.NET 6.0**.
 
 It contains base implementations for *view models*, *commands*, *data transfer object* conversion and more.
-
-The following platform specific extensions exist:
-- [<img src="https://raw.githubusercontent.com/sungaila/PresentationBase/master/Icon.png" align="center" width="24" height="24" alt="PresentationBase Logo"> PresentationBase (WPF)](https://github.com/sungaila/PresentationBase)
 
 ## Examples
 Take a look at the [Quick start in the wiki](https://github.com/sungaila/PresentationBase.Core/wiki). Here are some basic examples for using PresentationBase.Core:

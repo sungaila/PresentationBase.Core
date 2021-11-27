@@ -15,7 +15,7 @@ namespace PresentationBase.DtoConverters
         /// <summary>
         /// The data transfer object type.
         /// </summary>
-        public Type Type { get; private set; }
+        public Type Type { get; }
 
         /// <summary>
         /// Creates a new <see cref="DtoAttribute"/> instance.
@@ -24,19 +24,6 @@ namespace PresentationBase.DtoConverters
         public DtoAttribute(Type type)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
-        }
-
-        /// <summary>
-        /// Returns a <see cref="DtoAttribute"/> if found for a given view model type.
-        /// </summary>
-        /// <param name="viewModelType">The view model type.</param>
-        [Obsolete("A view model can be linked to multiple data transfer objects. Please consider to call " + nameof(GetDtoAttributes) + " instead.")]
-        public static DtoAttribute? GetDtoAttribute(Type viewModelType)
-        {
-            if (viewModelType == null)
-                throw new ArgumentNullException(nameof(viewModelType));
-
-            return viewModelType.GetCustomAttributes(true).OfType<DtoAttribute>().FirstOrDefault();
         }
 
         /// <summary>

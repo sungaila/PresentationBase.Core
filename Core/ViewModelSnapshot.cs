@@ -9,7 +9,7 @@ namespace PresentationBase
     {
         private readonly TrxViewModel _contextViewModel;
 
-        private readonly Dictionary<PropertyDescriptor, object?> _properties = new Dictionary<PropertyDescriptor, object?>();
+        private readonly Dictionary<PropertyDescriptor, object?> _properties = new();
 
         public ViewModelSnapshot(TrxViewModel contextViewModel)
         {
@@ -25,8 +25,7 @@ namespace PresentationBase
 
                 if (HelperExtensions.IsTypeObservableViewModelCollection(property.PropertyType))
                 {
-                    var existingCollection = (IEnumerable)property.GetValue(_contextViewModel);
-                    if (existingCollection == null)
+                    if (property.GetValue(_contextViewModel) is not IEnumerable existingCollection)
                     {
                         _properties.Add(property, null);
                         continue;
@@ -56,8 +55,7 @@ namespace PresentationBase
 
                 if (HelperExtensions.IsTypeObservableViewModelCollection(property.Key.PropertyType))
                 {
-                    var existingCollection = (IEnumerable)property.Key.GetValue(_contextViewModel);
-                    if (existingCollection == null)
+                    if (property.Key.GetValue(_contextViewModel) is not IEnumerable existingCollection)
                     {
                         continue;
                     }

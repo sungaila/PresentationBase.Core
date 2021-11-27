@@ -135,7 +135,7 @@ namespace PresentationBase
         }
 
         /// <inheritdoc/>
-        public Dictionary<Type, IViewModelCommand> Commands { get; private set; } = new Dictionary<Type, IViewModelCommand>();
+        public Dictionary<Type, IViewModelCommand> Commands { get; } = new Dictionary<Type, IViewModelCommand>();
 
         /// <inheritdoc/>
         public object? Tag { get; set; }
@@ -176,7 +176,7 @@ namespace PresentationBase
         /// <summary>
         /// A list containing all known commands found with reflection.
         /// </summary>
-        private static readonly List<IViewModelCommand> KnownCommands = new List<IViewModelCommand>();
+        private static readonly List<IViewModelCommand> KnownCommands = new();
 
         static ViewModel()
         {

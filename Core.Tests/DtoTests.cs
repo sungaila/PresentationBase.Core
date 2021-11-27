@@ -9,27 +9,6 @@ namespace PresentationBase.Tests
     public class DtoTests
     {
         [TestMethod]
-        [Obsolete("GetDtoAttribute is deprecated and replaced by GetDtoAttributes.")]
-        public void GetDtoAttribute()
-        {
-            var dtoAttr = DtoAttribute.GetDtoAttribute(typeof(DummyViewModel));
-            Assert.IsNull(dtoAttr);
-
-            dtoAttr = DtoAttribute.GetDtoAttribute(typeof(Dummy2ViewModel));
-            Assert.IsNotNull(dtoAttr);
-            Assert.IsNotNull(dtoAttr!.Type);
-            Assert.AreEqual(dtoAttr.Type, typeof(string));
-
-            dtoAttr = DtoAttribute.GetDtoAttribute(typeof(Dummy3ViewModel));
-            Assert.IsNotNull(dtoAttr);
-            Assert.AreEqual(dtoAttr!.Type, typeof(AwesomeTransferDataObject));
-
-            var dtoPropAttr = DtoPropertyAttribute.GetDtoPropertyAttribute(typeof(Dummy3ViewModel).GetProperty(nameof(Dummy3ViewModel.NonExistent))!);
-            Assert.IsNotNull(dtoPropAttr);
-            Assert.AreEqual("NotExistingProperty", dtoPropAttr!.PropertyName);
-        }
-
-        [TestMethod]
         public void GetDtoAttributes()
         {
             var dtoAttrs = DtoAttribute.GetDtoAttributes(typeof(DummyViewModel));

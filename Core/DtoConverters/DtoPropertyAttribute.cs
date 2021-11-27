@@ -16,12 +16,12 @@ namespace PresentationBase.DtoConverters
         /// <summary>
         /// The data transfer object property name.
         /// </summary>
-        public string PropertyName { get; private set; }
+        public string PropertyName { get; }
 
         /// <summary>
         /// The data transfer object type.
         /// </summary>
-        public Type? Type { get; private set; }
+        public Type? Type { get; }
 
         /// <summary>
         /// Creates a new <see cref="DtoPropertyAttribute"/> instance.
@@ -35,19 +35,6 @@ namespace PresentationBase.DtoConverters
 
             PropertyName = propertyName!;
             Type = type;
-        }
-
-        /// <summary>
-        /// Returns a <see cref="DtoPropertyAttribute"/> if found for a given <see cref="PropertyInfo"/>.
-        /// </summary>
-        /// <param name="viewModelPropertyInfo">The property info.</param>
-        [Obsolete("A view model property can be linked to multiple data transfer object properties. Please consider to call " + nameof(GetDtoPropertyAttributes) + " instead.")]
-        public static DtoPropertyAttribute? GetDtoPropertyAttribute(PropertyInfo viewModelPropertyInfo)
-        {
-            if (viewModelPropertyInfo == null)
-                throw new ArgumentNullException(nameof(viewModelPropertyInfo));
-
-            return viewModelPropertyInfo.GetCustomAttribute<DtoPropertyAttribute>(true);
         }
 
         /// <summary>

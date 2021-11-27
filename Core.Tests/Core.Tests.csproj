@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly -->
   <PropertyGroup>
-    <TargetFrameworks>net50;netcoreapp3.1;net45</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp3.1;net461</TargetFrameworks>
     <AssemblyName>PresentationBase.Core.Tests</AssemblyName>
     <RootNamespace>PresentationBase.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
+    <Configurations>Debug;Release;ReleaseSigned</Configurations>
   </PropertyGroup>
 
   <!-- C# compiler -->
@@ -13,7 +14,7 @@
     <Nullable>enable</Nullable>
     <Features>strict</Features>
     <WarningsAsErrors>nullable</WarningsAsErrors>
-	<NoWarn>CA1416</NoWarn>
+    <NoWarn>CA1416</NoWarn>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
@@ -25,8 +26,8 @@
 
   <!-- NuGet Icon -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.4" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
   </ItemGroup>
 </Project>
