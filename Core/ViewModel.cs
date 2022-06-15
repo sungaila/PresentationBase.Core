@@ -21,7 +21,7 @@ namespace PresentationBase
             // add all matching commands found with reflection
             foreach (var command in KnownCommands)
             {
-                Type type;
+                Type? type;
 
                 for (type = command.GetType(); type != null; type = type.BaseType)
                 {
@@ -194,17 +194,12 @@ namespace PresentationBase
 
         static ViewModel()
         {
-#if !NET5_0
             ReInitializeCommands();
-#endif
         }
 
         /// <summary>
         /// Reinitializes the <see cref="KnownCommands"/> list for command and view model interaction.
         /// </summary>
-#if NET5_0
-        [ModuleInitializer]
-#endif
         public static void ReInitializeCommands()
         {
             try
