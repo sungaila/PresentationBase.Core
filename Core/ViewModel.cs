@@ -19,7 +19,21 @@ namespace PresentationBase
         protected ViewModel()
         {
             // add all matching commands found with reflection
-            AddCommands(KnownCommands.Where(cmd => cmd.GetType().HasGenericTypeArgument(GetType())).ToArray());
+            foreach (var command in KnownCommands)
+            {
+                Type type;
+
+                for (type = command.GetType(); type != null; type = type.BaseType)
+                {
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ViewModelCommand<>))
+                        break;
+                }
+
+                if (type == null || !type.GenericTypeArguments.Single().IsAssignableFrom(GetType()))
+                    continue;
+
+                AddCommands(command);
+            }
         }
 
         /// <inheritdoc/>
@@ -96,7 +110,7 @@ namespace PresentationBase
         /// This ensures that <see cref="ICommand.CanExecute(object)"/> is called whenever a property was changed.
         /// </summary>
         /// <param name="commands">The commands to add.</param>
-        private void AddCommands(params IViewModelCommand[] commands)
+        protected void AddCommands(params IViewModelCommand[] commands)
         {
             foreach (var command in commands)
             {
@@ -117,7 +131,7 @@ namespace PresentationBase
         /// Removes existing commands for this view model.
         /// </summary>
         /// <param name="commands">The commands to remove.</param>
-        private void RemoveCommands(params IViewModelCommand[] commands)
+        protected void RemoveCommands(params IViewModelCommand[] commands)
         {
             foreach (var command in commands)
             {

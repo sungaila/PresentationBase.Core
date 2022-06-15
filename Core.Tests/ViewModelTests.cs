@@ -30,7 +30,7 @@ namespace PresentationBase.Tests
             Assert.AreEqual(0, viewModel.GetErrors("NotExisting").Cast<string>().Count());
 
             Assert.IsNotNull(viewModel.Commands);
-            Assert.AreEqual(0, viewModel.Commands.Count);
+            Assert.AreEqual(4, viewModel.Commands.Count);
         }
 
         [TestMethod]
@@ -38,8 +38,9 @@ namespace PresentationBase.Tests
         {
             var viewModel = new TestViewModel();
             Assert.IsFalse(viewModel.Commands.TryGetValue(typeof(IViewModelCommand), out _));
-            Assert.IsFalse(viewModel.Commands.TryGetValue(typeof(DummyCommand), out _));
-            Assert.IsTrue(viewModel.Commands.TryGetValue(typeof(TestCommand), out IViewModelCommand? cmd3));
+            Assert.IsTrue(viewModel.Commands.TryGetValue(typeof(DummyCommand), out var cmd2));
+            Assert.IsInstanceOfType(cmd2, typeof(DummyCommand));
+            Assert.IsTrue(viewModel.Commands.TryGetValue(typeof(TestCommand), out var cmd3));
             Assert.IsInstanceOfType(cmd3, typeof(TestCommand));
         }
 

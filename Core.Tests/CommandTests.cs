@@ -10,7 +10,7 @@ namespace PresentationBase.Tests
         public void CommandsDictionary()
         {
             var viewModel = new TestViewModel();
-            Assert.AreEqual(1, viewModel.Commands.Count);
+            Assert.AreEqual(5, viewModel.Commands.Count);
 
             var cmd = viewModel.Commands[typeof(TestCommand)];
             Assert.IsNotNull(cmd);

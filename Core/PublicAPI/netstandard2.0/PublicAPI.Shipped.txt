@@ -111,3 +111,5 @@ virtual PresentationBase.ViewModel.IgnoredDirtyProperties.get -> System.Collecti
 virtual PresentationBase.ViewModelCommand<TViewModel>.CanExecute(TViewModel! parameter) -> bool
 virtual PresentationBase.ViewModelCommandAsync<TViewModel>.HandleUncaughtException(TViewModel! parameter, System.Exception! ex) -> void
 PresentationBase.TrxViewModel.IsRejectingChanges.get -> bool
+PresentationBase.ViewModel.AddCommands(params PresentationBase.IViewModelCommand![]! commands) -> void
+PresentationBase.ViewModel.RemoveCommands(params PresentationBase.IViewModelCommand![]! commands) -> void
