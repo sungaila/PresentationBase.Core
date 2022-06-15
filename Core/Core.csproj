@@ -20,8 +20,10 @@
     <PackageIcon>Icon_128.png</PackageIcon>
     <PackageProjectUrl>https://github.com/sungaila/PresentationBase.Core</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/PresentationBase.Core/master/Icon_128.png</PackageIconUrl>
-    <Description>A lightweight MVVM implementation targeting .NET Standard 2.0 and .NET 5.0.</Description>
-    <PackageReleaseNotes>Assemblies and NuGet package digitally signed.</PackageReleaseNotes>
+    <Description>A lightweight MVVM implementation targeting .NET Standard 2.0 and .NET 6.0.</Description>
+    <PackageReleaseNotes>- Make AddCommands and RemoveCommands accessible.
+- Commands found via reflection now check the class inheritance properly.
+- Add .NET 6.0 as target framework.</PackageReleaseNotes>
     <PackageTags>MVVM ViewModel Command INotifyPropertyChanged INotifyPropertyChanging INotifyDataErrorInfo IEditableObject IRevertibleChangeTracking ICommand DTO C#</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/PresentationBase.Core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
