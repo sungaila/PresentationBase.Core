@@ -3,8 +3,9 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-trigger:
-- master
+# Trigger on all branches
+#trigger:
+#- master
 
 jobs:
 - job: Build
@@ -12,6 +13,17 @@ jobs:
   pool:
     vmImage: 'windows-latest'
   steps:
+  - task: UseDotNet@2
+    displayName: 'Install .NET 6'
+    inputs:
+      packageType: 'sdk'
+      version: '6.x'
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore solution'
+    inputs:
+      command: 'restore'
+      projects: 'PresentationBase.Core.sln'
+      feedsToUse: 'select'
   - task: DotNetCoreCLI@2
     displayName: 'Build solution'
     inputs:
@@ -61,6 +73,16 @@ jobs:
   steps:
   - checkout: none
     displayName: 'Skip checkout'
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core 3.1'
+    inputs:
+      packageType: 'sdk'
+      version: '3.1.x'
+  - task: UseDotNet@2
+    displayName: 'Install .NET 6'
+    inputs:
+      packageType: 'sdk'
+      version: '6.x'
   - task: DownloadPipelineArtifact@2
     displayName: 'Download test assemblies'
     inputs:
@@ -68,15 +90,15 @@ jobs:
       artifactName: 'Tests'
       targetPath: '$(Pipeline.Workspace)'
   - task: VSTest@2
-    displayName: '.NET Framework 4.6.1'
+    displayName: '.NET Framework 4.6.2'
     condition: eq(variables['agent.os'], 'Windows_NT')
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\**\net461\PresentationBase.Core.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\net462\PresentationBase.Core.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
-      testRunTitle: '.NET Framework 4.6.1 ($(agent.os))'
+      testRunTitle: '.NET Framework 4.6.2 ($(agent.os))'
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
   - task: DotNetCoreCLI@2
@@ -87,9 +109,9 @@ jobs:
       arguments: '$(Pipeline.Workspace)\**\netcoreapp3.1\PresentationBase.Core.Tests.dll'
       testRunTitle: '.NET Core 3.1 ($(agent.os))'
   - task: DotNetCoreCLI@2
-    displayName: '.NET 5.0'
+    displayName: '.NET 6.0'
     condition: succeededOrFailed()
     inputs:
       command: 'test'
-      arguments: '$(Pipeline.Workspace)\**\net5.0\PresentationBase.Core.Tests.dll'
-      testRunTitle: '.NET 5.0 ($(agent.os))'
+      arguments: '$(Pipeline.Workspace)\**\net6.0\PresentationBase.Core.Tests.dll'
+      testRunTitle: '.NET 6.0 ($(agent.os))'

@@ -9,17 +9,19 @@ namespace PresentationBase.Tests
         [TestMethod]
         public void Generic()
         {
+            var expectedCount = ExecutionCount + 1;
             bool anyDispatcherExecuted = false;
             Dispatcher.Dispatch(() => anyDispatcherExecuted = true);
             Assert.IsTrue(anyDispatcherExecuted, "The dispatcher has not been executed.");
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
         }
 
         [TestMethod]
         public void ViewModelCommand()
         {
+            var expectedCount = ExecutionCount + 1;
             new TestCommand().RaiseCanExecuteChanged();
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
         }
 
         public class TestCommand : ViewModelCommand<ViewModel>
@@ -33,29 +35,36 @@ namespace PresentationBase.Tests
         [TestMethod]
         public void ObservableViewModelCollection()
         {
+            var expectedCount = ExecutionCount + 1;
             var rootViewModel = new TestViewModel();
             var childViewModel = new TestViewModel();
 
             rootViewModel.Children.Add(childViewModel);
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
 
+            expectedCount = ExecutionCount + 1;
             rootViewModel.Children.Remove(childViewModel);
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
 
+            expectedCount = ExecutionCount + 1;
             rootViewModel.Children.AddRange(new[] { new TestViewModel(), new TestViewModel() });
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
 
+            expectedCount = ExecutionCount + 1;
             rootViewModel.Children.Replace(new[] { new TestViewModel(), new TestViewModel(), new TestViewModel() });
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
 
+            expectedCount = ExecutionCount + 1;
             rootViewModel.Children.Insert(0, new TestViewModel());
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
 
+            expectedCount = ExecutionCount + 1;
             rootViewModel.Children.RemoveAt(0);
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
 
+            expectedCount = ExecutionCount + 1;
             rootViewModel.Children.Clear();
-            AssertDispatcherExecution();
+            AssertDispatcherExecution(expectedCount);
         }
 
         public class TestViewModel : ViewModel
@@ -68,18 +77,17 @@ namespace PresentationBase.Tests
             }
         }
 
-        static void AssertDispatcherExecution()
+        static void AssertDispatcherExecution(int expectedCount)
         {
-            Assert.IsTrue(TestDispatcherExecuted, $"{nameof(TestDispatcher)} has not been executed.");
-            TestDispatcherExecuted = false;
+            Assert.IsTrue(ExecutionCount >= expectedCount, $"{nameof(TestDispatcher)} has not been executed.");
         }
 
-        static bool TestDispatcherExecuted { get; set; }
+        static int ExecutionCount { get; set; }
 
         [TestCleanup]
         public void Cleanup()
         {
-            TestDispatcherExecuted = false;
+            ExecutionCount = 0;
         }
 
         public class TestDispatcher : Dispatcher
@@ -88,7 +96,7 @@ namespace PresentationBase.Tests
             {
                 Assert.IsNotNull(action);
                 action.Invoke();
-                TestDispatcherExecuted = true;
+                ExecutionCount++;
             }
         }
     }
